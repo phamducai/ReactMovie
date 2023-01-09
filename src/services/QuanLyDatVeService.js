@@ -7,7 +7,7 @@ export class QuanLyDatVeService extends baseService {
   }
   layChiTietPhongVe = (maLichChieu) => {
     return this.get(
-      `/api/QuanLyDatVe/LayDanhSachPhongVe?MaLichChieu=${maLichChieu.maLichChieu}`
+      `/api/QuanLyDatVe/LayDanhSachPhongVe?MaLichChieu=${maLichChieu}`
     );
   };
   datVe = (ThongTinDatVe) => {

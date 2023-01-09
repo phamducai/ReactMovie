@@ -10,7 +10,7 @@ import Header from "templates/HomeTemplate/Layout/Header/Header";
 function DetailMovie(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const id = useParams();
+  const { id } = useParams();
   useEffect(
     () => {
       dispatch(layThongTinChiTietPhim(id));

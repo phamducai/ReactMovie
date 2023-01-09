@@ -1,8 +1,5 @@
 import { quanLyNguoiDungService } from "../../services/QuanLyNguoiDung";
-import {
-  DANG_NHAP_ACTION,
-  SET_THONG_TIN_NGUOI_DUNG,
-} from "./types/QuanLyNguoiDungType";
+import { DANG_NHAP_ACTION } from "./types/QuanLyNguoiDungType";
 export const dangNhapAction = async (thongTinDangNhap) => {
   try {
     const result = await quanLyNguoiDungService.dangNhap(thongTinDangNhap);

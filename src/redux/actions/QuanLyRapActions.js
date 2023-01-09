@@ -20,6 +20,7 @@ export const layDanhSachHeThongRapAction = () => {
 };
 
 export const layThongTinChiTietPhim = (id) => {
+  console.log(id);
   return async (next) => {
     try {
       const result = await quanLyRapService.layThongTinLichChieuPhim(id);
