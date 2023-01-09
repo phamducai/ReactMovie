@@ -3,6 +3,7 @@ import { AppleOutlined, FacebookOutlined } from "@ant-design/icons";
 import _ from "lodash";
 import React from "react";
 import { useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 
 export default function Footer(props) {
   const { heThongRapChieu } = useSelector((state) => state.QuanLyRapReducer);
@@ -15,7 +16,8 @@ export default function Footer(props) {
       <div className="container px-6 mx-auto space-y-6 divide-y divide-gray-400 md:space-y-12 divide-opacity-50">
         <div className="grid grid-cols-12">
           <div className="pb-6 col-span-full md:pb-0 md:col-span-6">
-            <a
+            <NavLink
+              to="/"
               href="#"
               className="flex justify-center space-x-3 md:justify-start text-black"
             >
@@ -23,7 +25,7 @@ export default function Footer(props) {
                 src="https://cyberlearn.vn/wp-content/uploads/2020/03/cyberlearn-min-new-opt2.png"
                 alt="cyberlearn.vn"
               />
-            </a>
+            </NavLink>
           </div>
           <div className="col-span-6 text-center md:text-left md:col-span-3">
             <p className="pb-1 text-lg font-medium text-white">PARTNER</p>

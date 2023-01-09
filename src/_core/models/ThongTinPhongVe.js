@@ -1,31 +1,27 @@
+/* eslint-disable no-use-before-define */
 export class ThongTinLichChieu {
-    thongTinPhim = new ThongTinPhim();
-    danhSachGhe = [];
-
-
-
+  thongTinPhim = new ThongTinPhim();
+  danhSachGhe = [];
 }
-
 
 export class ThongTinPhim {
-    maLichChieu = '';
-    tenCumRap = '';
-    tenRap = '';
-    diaChi = '';
-    tenPhim = '';
-    hinhAnh ='';
-    ngayChieu ='';
-    gioChieu = '';
+  maLichChieu = "";
+  tenCumRap = "";
+  tenRap = "";
+  diaChi = "";
+  tenPhim = "";
+  hinhAnh = "";
+  ngayChieu = "";
+  gioChieu = "";
 }
 
-export class Ghe  {
-    maGhe = '';
-    tenGhe = '';
-    mapRap = '';
-    loaiGhe = '';
-    stt = '';
-    giaVe = '';
-    daDat = '';
-    taiKhoanNguoiDat = '';
-   
+export class Ghe {
+  maGhe = "";
+  tenGhe = "";
+  mapRap = "";
+  loaiGhe = "";
+  stt = "";
+  giaVe = "";
+  daDat = "";
+  taiKhoanNguoiDat = "";
 }

@@ -2,19 +2,19 @@ import { CheckOutlined } from "@ant-design/icons";
 import { Tabs } from "antd";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import moment from "moment";
 import { useParams } from "react-router-dom";
+import "./Checkout.css";
+import clsx from "clsx";
+import _ from "lodash";
+
 import {
   datGheAction,
   datVeAction,
   layChiTietPhongVeAction,
 } from "redux/actions/QuanLyDatVeActions";
-import "./Checkout.css";
-import { SiGmail } from "react-icons/si";
-import clsx from "clsx";
 
-import _, { reduce } from "lodash";
 import { ThongTinDatVe } from "_core/models/ThongTinDatVe";
-import { layThongTinNguoiDungAction } from "redux/actions/QuanLyNguoiDungAction";
 
 function Checkout(props) {
   const { maLichChieu } = useParams();
@@ -155,17 +155,20 @@ function Checkout(props) {
           <hr />
           <div className="flex flex-row my-5">
             <div className="w-4/5">
-              <span className="text-red-400 text-lg">Ghế</span>
-            </div>
-            <div className="text-right col-span-1">
-              <span className="text-green-800 text-lg">tongTien</span>
+              <span className="text-red-400 text-lg">Ghế</span>{" "}
+              {_.sortBy(danhSachGheDangDat, ["stt"]).map((gheDD, index) => {
+                return (
+                  <span key={index} className="text-green-500 text-xl">
+                    {" "}
+                    {gheDD.stt}
+                  </span>
+                );
+              })}
             </div>
           </div>
           <hr />
           <div className="my-5">
-            <span className="mr-2">
-              <SiGmail />
-            </span>
+            <i>email</i>
             {userLogin?.email} <br />
           </div>
           <hr />
@@ -197,7 +200,6 @@ function Checkout(props) {
   );
 }
 function KetQuaDatVe(props) {
-  const dispatch = useDispatch();
   const thongTinNguoiDung = useSelector(
     (state) => state.QuanLyNguoiDungReducer?.thongTinNguoiDung
   );
@@ -208,150 +210,47 @@ function KetQuaDatVe(props) {
       <div className="container px-5 py-24 mx-auto">
         <div className="flex flex-col text-center w-full mb-20">
           <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">
-            Our Team
+            Lịch Sử Đặt Vé
           </h1>
-          <p className="lg:w-2/3 mx-auto leading-relaxed text-base">
-            Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical
-            gentrify, subway tile poke farm-to-table. Franzen you probably
-            haven't heard of them.
-          </p>
         </div>
         <div className="flex flex-wrap -m-2">
-          <div className="p-2 lg:w-1/3 md:w-1/2 w-full">
-            <div className="h-full flex items-center border-gray-200 border p-4 rounded-lg">
-              <img
-                alt="team"
-                className="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4"
-                src="https://dummyimage.com/80x80"
-              />
-              <div className="flex-grow">
-                <h2 className="text-gray-900 title-font font-medium">
-                  Holden Caulfield
-                </h2>
-                <p className="text-gray-500">UI Designer</p>
+          {thongTinNguoiDung.thongTinDatVe?.map((ticket, index) => {
+            return (
+              <div className="p-2 lg:w-1/3 md:w-1/2 w-full" key={index}>
+                <div className="h-full flex items-center border-gray-200 border p-4 rounded-lg">
+                  <img
+                    alt="team"
+                    className="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4"
+                    src={ticket.hinhAnh}
+                  />
+                  <div className="flex-grow">
+                    <h2 className="text-gray-900 title-font font-medium">
+                      {ticket.tenPhim}
+                    </h2>
+                    <p className="text-gray-500">
+                      {moment(ticket.ngayDat).format("hh:mm A-DD/MM/YYYY")}
+                    </p>
+                    <p>
+                      <span className="font-bold">Địa điểm:</span>
+                      {ticket.danhSachGhe[0].tenHeThongRap}
+                    </p>
+                    <p>
+                      <span className="font-bold">Tên rạp:</span>{" "}
+                      {ticket.danhSachGhe[0].tenCumRap} -{" "}
+                      <span className="font-bold">Ghế:</span>{" "}
+                      {ticket.danhSachGhe.slice(0, 1).map((ghe, index) => {
+                        return (
+                          <span className="text-green-500 text-xl" key={index}>
+                            {ghe.tenGhe}
+                          </span>
+                        );
+                      })}
+                    </p>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <div className="p-2 lg:w-1/3 md:w-1/2 w-full">
-            <div className="h-full flex items-center border-gray-200 border p-4 rounded-lg">
-              <img
-                alt="team"
-                className="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4"
-                src="https://dummyimage.com/84x84"
-              />
-              <div className="flex-grow">
-                <h2 className="text-gray-900 title-font font-medium">
-                  Henry Letham
-                </h2>
-                <p className="text-gray-500">CTO</p>
-              </div>
-            </div>
-          </div>
-          <div className="p-2 lg:w-1/3 md:w-1/2 w-full">
-            <div className="h-full flex items-center border-gray-200 border p-4 rounded-lg">
-              <img
-                alt="team"
-                className="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4"
-                src="https://dummyimage.com/88x88"
-              />
-              <div className="flex-grow">
-                <h2 className="text-gray-900 title-font font-medium">
-                  Oskar Blinde
-                </h2>
-                <p className="text-gray-500">Founder</p>
-              </div>
-            </div>
-          </div>
-          <div className="p-2 lg:w-1/3 md:w-1/2 w-full">
-            <div className="h-full flex items-center border-gray-200 border p-4 rounded-lg">
-              <img
-                alt="team"
-                className="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4"
-                src="https://dummyimage.com/90x90"
-              />
-              <div className="flex-grow">
-                <h2 className="text-gray-900 title-font font-medium">
-                  John Doe
-                </h2>
-                <p className="text-gray-500">DevOps</p>
-              </div>
-            </div>
-          </div>
-          <div className="p-2 lg:w-1/3 md:w-1/2 w-full">
-            <div className="h-full flex items-center border-gray-200 border p-4 rounded-lg">
-              <img
-                alt="team"
-                className="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4"
-                src="https://dummyimage.com/94x94"
-              />
-              <div className="flex-grow">
-                <h2 className="text-gray-900 title-font font-medium">
-                  Martin Eden
-                </h2>
-                <p className="text-gray-500">Software Engineer</p>
-              </div>
-            </div>
-          </div>
-          <div className="p-2 lg:w-1/3 md:w-1/2 w-full">
-            <div className="h-full flex items-center border-gray-200 border p-4 rounded-lg">
-              <img
-                alt="team"
-                className="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4"
-                src="https://dummyimage.com/98x98"
-              />
-              <div className="flex-grow">
-                <h2 className="text-gray-900 title-font font-medium">
-                  Boris Kitua
-                </h2>
-                <p className="text-gray-500">UX Researcher</p>
-              </div>
-            </div>
-          </div>
-          <div className="p-2 lg:w-1/3 md:w-1/2 w-full">
-            <div className="h-full flex items-center border-gray-200 border p-4 rounded-lg">
-              <img
-                alt="team"
-                className="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4"
-                src="https://dummyimage.com/100x90"
-              />
-              <div className="flex-grow">
-                <h2 className="text-gray-900 title-font font-medium">
-                  Atticus Finch
-                </h2>
-                <p className="text-gray-500">QA Engineer</p>
-              </div>
-            </div>
-          </div>
-          <div className="p-2 lg:w-1/3 md:w-1/2 w-full">
-            <div className="h-full flex items-center border-gray-200 border p-4 rounded-lg">
-              <img
-                alt="team"
-                className="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4"
-                src="https://dummyimage.com/104x94"
-              />
-              <div className="flex-grow">
-                <h2 className="text-gray-900 title-font font-medium">
-                  Alper Kamu
-                </h2>
-                <p className="text-gray-500">System</p>
-              </div>
-            </div>
-          </div>
-          <div className="p-2 lg:w-1/3 md:w-1/2 w-full">
-            <div className="h-full flex items-center border-gray-200 border p-4 rounded-lg">
-              <img
-                alt="team"
-                className="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4"
-                src="https://dummyimage.com/108x98"
-              />
-              <div className="flex-grow">
-                <h2 className="text-gray-900 title-font font-medium">
-                  Rodrigo Monchi
-                </h2>
-                <p className="text-gray-500">Product Manager</p>
-              </div>
-            </div>
-          </div>
+            );
+          })}
         </div>
       </div>
     </section>
