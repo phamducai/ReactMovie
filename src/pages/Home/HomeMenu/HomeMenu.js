@@ -1,10 +1,13 @@
 import React from "react";
 import { Tabs, Button } from "antd";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
+import "./homeMenu.css";
 
 function HomeMenu(props) {
   const { heThongRapChieu } = props;
-
+  const navigate = useNavigate();
+  const flagLogin = localStorage.getItem("token");
   return (
     <Tabs
       tabPosition="left"
@@ -42,13 +45,13 @@ function HomeMenu(props) {
                               <div>
                                 <p>
                                   {" "}
-                                  <span>C18</span>
+                                  <span className="jss624">C18</span>
                                   {item.tenPhim}
                                 </p>
-                                <div className=" grid grid-cols-2 gap-4 ">
+                                <div className=" grid lg:grid-cols-1 justify-centerb gap-4">
                                   {" "}
                                   {item?.lstLichChieuTheoPhim
-                                    .slice(0, 4)
+                                    .slice(0, 2)
                                     .map((itemhour) => {
                                       return (
                                         <Button
@@ -56,6 +59,19 @@ function HomeMenu(props) {
                                           type="default"
                                           size="default"
                                           key={itemhour.maLichChieu}
+                                          onClick={() => {
+                                            if (flagLogin) {
+                                              navigate(
+                                                `/checkout/${itemhour.maLichChieu}`
+                                              );
+                                            } else {
+                                              navigate("/login");
+                                              dispatchEvent({
+                                                type: "DANGODATVE",
+                                                flag: { itemhour },
+                                              });
+                                            }
+                                          }}
                                         >
                                           {moment(
                                             itemhour?.ngayChieuGioChieu
