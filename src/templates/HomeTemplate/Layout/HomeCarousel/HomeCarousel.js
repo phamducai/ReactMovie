@@ -9,7 +9,7 @@ const contentStyle = {
   color: "#fff",
   lineHeight: "160px",
   textAlign: "center",
-  backgroundPosition: "center",
+  backgroundPosition: "top",
   backgroundSize: "100%",
   backgroundRepeat: "no-repeat",
 };
@@ -26,15 +26,17 @@ function HomeCarousel() {
         <div key={index}>
           <div
             style={{ ...contentStyle, backgroundImage: `url(${item.hinhAnh})` }}
-          >
-            <img src={item.hinhAnh} className="opacity-0" alt={item.hinhAnh} />
-          </div>
+          ></div>
         </div>
       );
     });
   };
   return (
-    <Carousel effect="fade" style={{ width: "100%", padding: 0, margin: 0 }}>
+    <Carousel
+      effect="fade"
+      style={{ width: "100%", padding: 0, margin: 0 }}
+      dotPosition
+    >
       {renderImg()}
     </Carousel>
   );
