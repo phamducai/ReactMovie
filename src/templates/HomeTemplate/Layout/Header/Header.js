@@ -183,12 +183,11 @@ export default function Header() {
               </NavLink>
             </nav>
           )}
-
           <Select
             defaultValue="en"
             style={{ width: 70 }}
             onChange={handleChange}
-            className="ml-5"
+            className="lg:ml-2 ml-1"
           >
             <Select.Option value="en">Eng</Select.Option>
             <Select.Option value="vi">Vi</Select.Option>

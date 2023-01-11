@@ -21,12 +21,15 @@ function HomeMenu(props) {
               items={heThongRap.lstCumRap?.slice(0, 6).map((cumRap) => {
                 return {
                   label: (
-                    <div key={cumRap.maCumRap + "10"}>
+                    <div
+                      key={cumRap.maCumRap + "10"}
+                      className="lg:w-3/5 md:w-40"
+                    >
                       <div className="text-left">
                         {cumRap?.tenCumRap.substr(0, 30)}
                       </div>
                       <div className="text-left">
-                        <p>{cumRap?.diaChi.split(" ", 5)}</p>
+                        <p>{cumRap?.diaChi.split(" ", 15)}</p>
                       </div>
                     </div>
                   ),

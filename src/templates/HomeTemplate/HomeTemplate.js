@@ -8,7 +8,7 @@ function HomeTemplate() {
     window.scrollTo(0, 0);
   }, []);
   return (
-    <div>
+    <div className="">
       <Header />
       <HomeCarousel />
       <Home />
