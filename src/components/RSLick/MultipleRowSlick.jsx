@@ -9,7 +9,7 @@ function MultipleRowSlick(props) {
   const dispatch = useDispatch();
   return (
     <Fragment>
-      <div className="grid grid-cols-4 gap-8">
+      <div className="grid lg:grid-cols-4 gap-8 md:grid-cols-2 grid-cols-1 justify-items-center">
         {props.arrFilm.items?.map((item, index) => {
           // eslint-disable-next-line react/jsx-pascal-case
           return <Film_Flip item={item} key={index} />;

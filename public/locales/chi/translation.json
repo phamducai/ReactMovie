@@ -1,0 +1,17 @@
+{
+  "hello": {
+    "1": "你好",
+    "2": "心潮"
+  },
+  "Sign In": "登錄",
+  "Sign Up": "报名",
+  "Showtimes": "放映時間s",
+  "Cluster of Theaters": "劇院集群",
+  "News": "消息",
+  "Application": "應用",
+  "Log out": "登出",
+  "Register": "登記",
+  "Buy Now": "訂票",
+  "Evaluate": "評估",
+  "Show date": "顯示日期"
+}

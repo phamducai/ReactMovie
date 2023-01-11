@@ -1,0 +1,16 @@
+{
+  "hello": {
+    "1": "hello",
+    "2": "hi"
+  },
+  "Sign In": "Sign In",
+  "Sign Up": "Sign Up",
+  "Showtimes": "Showtimes",
+  "Cluster of Theaters": "Cluster of Theaters",
+  "News": "News",
+  "Application": "Application",
+  "Log out": "Log out",
+  "Buy Now": "Buy Now",
+  "Evaluate": "Evaluate",
+  "Show date": "Show date"
+}

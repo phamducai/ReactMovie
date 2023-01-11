@@ -3,10 +3,10 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import store from "redux/configStore";
-
+import "./i18n";
 import { Provider } from "react-redux";
 import App from "./App";
-import "tw-elements";
+
 import "antd/dist/reset.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 

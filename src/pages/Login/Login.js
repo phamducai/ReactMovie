@@ -3,24 +3,31 @@ import React from "react";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { dangNhapAction } from "redux/actions/QuanLyNguoiDungAction";
+import { useSelector } from "react-redux";
 
 function Login() {
+  const flag = useSelector((state) => state.CarouselReducer.flag);
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       taiKhoan: "",
       matKhau: "",
     },
-
     onSubmit: async (values) => {
       try {
         await dangNhapAction(values);
-        navigate("/");
+        if (flag) {
+          navigate(`/checkout/${flag?.itemLich.maLichChieu}`);
+        } else {
+          navigate("/");
+        }
+        window.location.reload();
       } catch (error) {
         console.log(error);
       }
     },
   });
+  console.log(flag);
   return (
     <React.Fragment>
       <div className="h-screen">

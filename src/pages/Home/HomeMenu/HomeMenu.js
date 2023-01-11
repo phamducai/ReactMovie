@@ -19,9 +19,12 @@ function HomeMenu(props) {
                 return {
                   label: (
                     <div key={cumRap.maCumRap + "10"}>
-                      {" "}
-                      <div className="text-left">{cumRap?.tenCumRap}</div>
-                      <div className="text-left"> {cumRap?.diaChi}</div>
+                      <div className="text-left">
+                        {cumRap?.tenCumRap.substr(0, 30)}
+                      </div>
+                      <div className="text-left">
+                        <p>{cumRap?.diaChi.split(" ", 5)}</p>
+                      </div>
                     </div>
                   ),
                   key: cumRap.maCumRap,

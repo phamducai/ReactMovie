@@ -9,6 +9,8 @@ module.exports = {
       height: {
         200: "50rem",
         99: "49rem",
+        120: "150rem",
+        100: "100rem",
       },
       gridTemplateColumns: {
         // Simple 16 column grid
@@ -19,7 +21,7 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tw-elements/dist/plugin")],
+  plugins: [],
   corePlugins: {
     preflight: false,
   },

@@ -1,9 +1,9 @@
 import { CheckOutlined } from "@ant-design/icons";
-import { Tabs } from "antd";
-import React, { useEffect } from "react";
+import { Button, Tabs } from "antd";
+import React, { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./Checkout.css";
 import clsx from "clsx";
 import _ from "lodash";
@@ -155,11 +155,12 @@ function Checkout(props) {
           <hr />
           <div className="flex flex-row my-5">
             <div className="w-4/5">
-              <span className="text-red-400 text-lg">Ghế</span>{" "}
+              <span className="text-red-400 text-lg w-44 overflow-x-scroll ">
+                Ghế
+              </span>{" "}
               {_.sortBy(danhSachGheDangDat, ["stt"]).map((gheDD, index) => {
                 return (
-                  <span key={index} className="text-green-500 text-xl">
-                    {" "}
+                  <span key={index} className="text-green-500 text-xl mr-2">
                     {gheDD.stt}
                   </span>
                 );
@@ -187,7 +188,6 @@ function Checkout(props) {
                 const thongTinDatVe = new ThongTinDatVe();
                 thongTinDatVe.maLichChieu = maLichChieu;
                 thongTinDatVe.danhSachVe = danhSachGheDangDat;
-
                 dispatch(datVeAction(thongTinDatVe));
               }}
             >
@@ -204,7 +204,6 @@ function KetQuaDatVe(props) {
     (state) => state.QuanLyNguoiDungReducer?.thongTinNguoiDung
   );
 
-  console.log(thongTinNguoiDung);
   return (
     <section className="text-gray-600 body-font">
       <div className="container px-5 py-24 mx-auto">
@@ -259,7 +258,12 @@ function KetQuaDatVe(props) {
 
 export default function CheckoutTab(props) {
   const { tabActive } = useSelector((state) => state.QuanLyDatVeReducer);
+  const userLogin = useSelector(
+    (state) => state.QuanLyNguoiDungReducer.thongTinNguoiDung
+  );
+  console.log(userLogin);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     return () => {
@@ -270,9 +274,52 @@ export default function CheckoutTab(props) {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const operations = (
+    <Fragment>
+      {!_.isEmpty(userLogin) ? (
+        <Fragment>
+          <button
+            onClick={() => {
+              navigate("/profile");
+            }}
+          >
+            {" "}
+            <div
+              style={{
+                width: 50,
+                height: 50,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              className="text-2xl ml-5 rounded-full bg-red-200"
+            >
+              {userLogin.taiKhoan.substr(0, 1)}
+            </div>
+            Hello ! {userLogin.taiKhoan}
+          </button>
+          <Button
+            onClick={() => {
+              localStorage.removeItem("token");
+              navigate("/");
+              window.location.reload();
+            }}
+            className="text-blue-800"
+          >
+            Đăng xuất
+          </Button>
+        </Fragment>
+      ) : (
+        ""
+      )}
+    </Fragment>
+  );
+
   return (
     <div className="p-5">
       <Tabs
+        tabBarExtraContent={operations}
         defaultActiveKey="1"
         activeKey={tabActive}
         animated

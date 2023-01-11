@@ -6,8 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { layThongTinChiTietPhim } from "redux/actions/QuanLyRapActions";
 import moment from "moment";
 import Header from "templates/HomeTemplate/Layout/Header/Header";
+import { useTranslation } from "react-i18next";
 
 function DetailMovie(props) {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
@@ -42,7 +44,7 @@ function DetailMovie(props) {
                       style={{ marginTop: "25%" }}
                     >
                       <p className="text-sm ">
-                        Ngày chiếu:{" "}
+                        {t("Show date")}:
                         {moment(filmDetail?.ngayKhoiChieu).format("DD.MM.YYYY")}{" "}
                       </p>
                       <h1 className="text-4xl leading-3  ">
@@ -83,7 +85,7 @@ function DetailMovie(props) {
                         fontSize: 15,
                       }}
                     >
-                      Đánh giá
+                      {t("Evaluate")}
                     </h1>
                   </div>
 
@@ -126,6 +128,10 @@ function DetailMovie(props) {
                                                 );
                                               } else {
                                                 navigate("/login");
+                                                dispatch({
+                                                  type: "DANGODATVE",
+                                                  flag: { itemLich },
+                                                });
                                               }
                                             }}
                                           >

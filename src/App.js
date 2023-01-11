@@ -6,6 +6,9 @@ import Login from "pages/Login/Login";
 import { useDispatch } from "react-redux";
 import { layThongTinNguoiDungAction } from "redux/actions/QuanLyNguoiDungAction";
 import { useEffect } from "react";
+import Profile from "pages/Profile/Profile";
+import Register from "pages/Register/Register/Register";
+import Test from "templates/Test";
 
 function App() {
   const dispatch = useDispatch();
@@ -21,6 +24,9 @@ function App() {
         <Route exact path="/detail/:id" element={<DetailMovie />} />
         <Route path="/checkout/:maLichChieu" element={<Checkout />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/test" element={<Test />} />
       </Routes>
     </BrowserRouter>
   );

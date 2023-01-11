@@ -2,12 +2,13 @@ import React from "react";
 import { PlayCircleOutlined } from "@ant-design/icons";
 import "./Flim_Flip.css";
 import { NavLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export default function Film_Flip(props) {
   const { item } = props;
-
+  const { t } = useTranslation();
   return (
-    <div className="flip-card mt-2">
+    <div className="flip-card mt-6">
       <div className="flip-card-inner">
         <div className="flip-card-front">
           <img
@@ -54,10 +55,9 @@ export default function Film_Flip(props) {
           </div>
         </div>
       </div>
-      <NavLink to={`/detail/${item.maPhim}`}>
-        {" "}
-        <div className="bg-orange-300 text-center cursor-pointer py-2 bg-indigo-300 my-2 text-success-50 font-bold">
-          ĐẶT VÉ
+      <NavLink to={`/detail/${item.maPhim}`} className="no-underline">
+        <div className="bg-orange-300 text-center cursor-pointer py-2 text-success-50 font-bold">
+          {t("Buy Now")}
         </div>
       </NavLink>
     </div>
