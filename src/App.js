@@ -8,7 +8,10 @@ import { layThongTinNguoiDungAction } from "redux/actions/QuanLyNguoiDungAction"
 import { useEffect } from "react";
 import Profile from "pages/Profile/Profile";
 import Register from "pages/Register/Register/Register";
-import Test from "templates/Test";
+
+import AdminTemplate from "templates/AdminTemplate/AdminTemplate";
+import Films from "pages/Admin/Films/Films";
+import AddNew from "pages/Admin/Films/AddNew/AddNew";
 
 function App() {
   const dispatch = useDispatch();
@@ -26,7 +29,10 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/test" element={<Test />} />
+
+        <Route path="/admin" element={<AdminTemplate />} />
+        <Route path="/admin/films" element={<Films />} />
+        <Route path="/admin/films/addnew" element={<AddNew />} />
       </Routes>
     </BrowserRouter>
   );

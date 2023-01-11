@@ -1,12 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { SmileOutlined } from "@ant-design/icons";
-import { Dropdown, Select, Space } from "antd";
-import { Option } from "antd/es/mentions";
-
 import React from "react";
+import { Dropdown, Select, Space } from "antd";
 import { useTranslation } from "react-i18next";
-
-import { BiUserCircle } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 export default function Header() {
