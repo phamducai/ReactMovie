@@ -12,6 +12,7 @@ import Register from "pages/Register/Register/Register";
 import AdminTemplate from "templates/AdminTemplate/AdminTemplate";
 import Films from "pages/Admin/Films/Films";
 import AddNew from "pages/Admin/Films/AddNew/AddNew";
+import Dashboard from "pages/Admin/Dashboard/Dashboard";
 
 function App() {
   const dispatch = useDispatch();
@@ -31,8 +32,9 @@ function App() {
         <Route path="/register" element={<Register />} />
 
         <Route path="/admin" element={<AdminTemplate />} />
-        <Route path="/admin/films" element={<Films />} />
-        <Route path="/admin/films/addnew" element={<AddNew />} />
+        <Route path="/admin/film" element={<Films />} />
+        <Route path="/admin/users" element={<AddNew />} />
+        <Route path="/admin/moredetail" element={<Dashboard />} />
       </Routes>
     </BrowserRouter>
   );
