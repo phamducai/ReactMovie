@@ -1,5 +1,9 @@
-import React from "react";
+import React from 'react'
 
 export default function Dashboard() {
-  return <div>haha</div>;
+    return (
+        <div>
+            user
+        </div>
+    )
 }

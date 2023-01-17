@@ -1,24 +1,30 @@
 import { DesktopOutlined, FileOutlined, UserOutlined } from "@ant-design/icons";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
 import { useState } from "react";
-const { Header, Content, Footer, Sider } = Layout;
-function getItem(label, key, icon, children) {
-  return {
-    key,
-    icon,
-    children,
-    label,
-  };
-}
-const items = [
-  getItem("User", "1", <UserOutlined />),
-  getItem("Film", "2", <FileOutlined />),
-  getItem("ShowTime", "3", <DesktopOutlined />),
-];
+import Films from "pages/Admin/Films/Films";
+import Addnew from "pages/Admin/Films/AddNew/AddNew";
+
 const App = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [render, updateRender] = useState(1);
+  const { Header, Content, Footer, Sider } = Layout;
 
+  function getItem(label, key, icon, children) {
+    return {
+      key,
+      icon,
+      children,
+      label,
+    };
+  }
+  const items = [
+    getItem("User", "1", <UserOutlined />),
+    getItem("Film", "2", <FileOutlined />, [
+      getItem("Film", "3"),
+      getItem("Add new", "4"),
+    ]),
+    getItem("ShowTime", "6", <DesktopOutlined />),
+  ];
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -28,16 +34,24 @@ const App = () => {
 
   const style = {
     height: "100%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
   };
 
   const components = {
-    1: <div style={style}>Option 1</div>,
+    1: <div style={style}>haha</div>,
     2: <div style={style}>Option 2</div>,
-    3: <div style={style}>Option 3</div>,
-    4: <div style={style}>Option 4</div>,
+    3: (
+      <div style={style}>
+        {" "}
+        <Films />
+      </div>
+    ),
+    4: (
+      <div style={style}>
+        <Addnew />
+      </div>
+    ),
+    5: <div style={style}>Option 3</div>,
+    6: <div style={style}>Option 4</div>,
   };
 
   return (

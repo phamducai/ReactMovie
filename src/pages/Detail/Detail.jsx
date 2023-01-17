@@ -117,9 +117,9 @@ function DetailMovie(props) {
                                 <div className="grid grid-cols-4">
                                   {item.lichChieuPhim
                                     .slice(0, 4)
-                                    .map((itemLich) => {
+                                    .map((itemLich, index) => {
                                       return (
-                                        <div key={itemLich.maRap}>
+                                        <div key={index}>
                                           <Button
                                             onClick={() => {
                                               if (flagLogin) {

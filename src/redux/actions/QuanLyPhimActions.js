@@ -1,5 +1,9 @@
 import { quanLyPhimService } from "../../services/QuanLyPhimService";
-import { SET_DANH_SACH_PHIM, SET_THONG_TIN_PHIM } from "./types/QuanLyPhimType";
+import {
+  SET_ALL_FILMS,
+  SET_DANH_SACH_PHIM,
+  SET_THONG_TIN_PHIM,
+} from "./types/QuanLyPhimType";
 import requester from "services/api";
 
 export const layDanhSachPhimAction = (page = 1) => {
@@ -20,6 +24,23 @@ export const layDanhSachPhimAction = (page = 1) => {
       });
     } catch (err) {
       console.log(err);
+    }
+  };
+};
+
+export const layDanhSachPhimActionAll = (tenPhim = "") => {
+  return async (dispatch) => {
+    try {
+      //Sử dụng tham số thamSo
+      const result = await quanLyPhimService.layDanhSachPhim(tenPhim);
+
+      //Sau khi lấy dữ liệu từ api về => redux (reducer)
+      dispatch({
+        type: SET_ALL_FILMS,
+        payload: result.data.content,
+      });
+    } catch (errors) {
+      console.log("errors", errors);
     }
   };
 };

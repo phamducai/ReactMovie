@@ -34,7 +34,7 @@ function Checkout(props) {
   const userLogin = useSelector(
     (state) => state.QuanLyNguoiDungReducer.thongTinNguoiDung
   );
-  console.log(danhSachGheDangDat);
+
   return (
     <div className=" min-h-screen mt-5">
       <div className="grid grid-cols-12">
@@ -203,7 +203,9 @@ function KetQuaDatVe(props) {
   const thongTinNguoiDung = useSelector(
     (state) => state.QuanLyNguoiDungReducer?.thongTinNguoiDung
   );
-
+  const arr = [...thongTinNguoiDung.thongTinDatVe];
+  const map = arr.reverse();
+  console.log(map);
   return (
     <section className="text-gray-600 body-font">
       <div className="container px-5 py-24 mx-auto">
@@ -213,9 +215,9 @@ function KetQuaDatVe(props) {
           </h1>
         </div>
         <div className="flex flex-wrap -m-2">
-          {thongTinNguoiDung.thongTinDatVe?.map((ticket, index) => {
+          {map.map((ticket) => {
             return (
-              <div className="p-2 lg:w-1/3 md:w-1/2 w-full" key={index}>
+              <div className="p-2 lg:w-1/3 md:w-1/2 w-full" key={ticket.maVe}>
                 <div className="h-full flex items-center border-gray-200 border p-4 rounded-lg">
                   <img
                     alt="team"
@@ -261,7 +263,7 @@ export default function CheckoutTab(props) {
   const userLogin = useSelector(
     (state) => state.QuanLyNguoiDungReducer.thongTinNguoiDung
   );
-  console.log(userLogin);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
