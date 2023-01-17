@@ -1,14 +1,6 @@
-import {
-  DesktopOutlined,
-  FileOutlined,
-  PieChartOutlined,
-  TeamOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
-import Films from "pages/Admin/Films/Films";
+import { DesktopOutlined, FileOutlined, UserOutlined } from "@ant-design/icons";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
 import { useState } from "react";
-import { useNavigate, useOutlet } from "react-router-dom";
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
   return {
@@ -18,27 +10,36 @@ function getItem(label, key, icon, children) {
     label,
   };
 }
-const outlet = useOutlet();
-const navigate = useNavigate();
 const items = [
-  getItem("haha", "/admin/film", <PieChartOutlined />),
-  getItem("Option 2", "2", <DesktopOutlined />),
-  getItem("User", "sub1", <UserOutlined />, [
-    getItem("Tom", "3"),
-    getItem("Bill", "4"),
-    getItem("Alex", "5"),
-  ]),
-  getItem("Team", "sub2", <TeamOutlined />, [
-    getItem("Team 1", "6"),
-    getItem("Team 2", "8"),
-  ]),
-  getItem("Files", "9", <FileOutlined />),
+  getItem("User", "1", <UserOutlined />),
+  getItem("Film", "2", <FileOutlined />),
+  getItem("ShowTime", "3", <DesktopOutlined />),
 ];
 const App = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const [render, updateRender] = useState(1);
+
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+  const handleClick = (menu) => {
+    updateRender(menu.key);
+  };
+
+  const style = {
+    height: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  };
+
+  const components = {
+    1: <div style={style}>Option 1</div>,
+    2: <div style={style}>Option 2</div>,
+    3: <div style={style}>Option 3</div>,
+    4: <div style={style}>Option 4</div>,
+  };
+
   return (
     <Layout
       style={{
@@ -50,19 +51,20 @@ const App = () => {
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
       >
-        <div
-          style={{
-            height: 32,
-            margin: 16,
-            background: "rgba(255, 255, 255, 0.2)",
-          }}
-        />
+        <div className="logo p-4">
+          <img
+            src="https://cyberlearn.vn/wp-content/uploads/2020/03/cyberlearn-min-new-opt2.png"
+            alt="..."
+            width="100%"
+          />
+        </div>
+
         <Menu
           theme="dark"
           defaultSelectedKeys={["1"]}
           mode="inline"
           items={items}
-          onClick={({ key }) => navigate(key)}
+          onClick={handleClick}
         />
       </Sider>
       <Layout className="site-layout">
@@ -77,23 +79,13 @@ const App = () => {
             margin: "0 16px",
           }}
         >
-          <Breadcrumb
+          <Content
             style={{
-              margin: "16px 0",
+              margin: "0 16px",
             }}
           >
-            <Breadcrumb.Item>User</Breadcrumb.Item>
-            <Breadcrumb.Item>Bill</Breadcrumb.Item>
-          </Breadcrumb>
-          <div
-            style={{
-              padding: 24,
-              minHeight: 360,
-              background: colorBgContainer,
-            }}
-          >
-            Bill is a cat.
-          </div>
+            <div>{components[render]}</div>
+          </Content>
         </Content>
         <Footer
           style={{

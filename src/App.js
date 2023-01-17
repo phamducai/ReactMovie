@@ -21,6 +21,7 @@ function App() {
     dispatch(layThongTinNguoiDungAction);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -31,10 +32,11 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/register" element={<Register />} />
 
-        <Route path="/admin" element={<AdminTemplate />} />
-        <Route path="/admin/film" element={<Films />} />
-        <Route path="/admin/users" element={<AddNew />} />
-        <Route path="/admin/moredetail" element={<Dashboard />} />
+        <Route path="/admin" element={<AdminTemplate />}>
+          <Route path="/admin/addfilm" element={<Films />} />
+          <Route path="/admin/addfilm" element={<Dashboard />} />
+          <Route path="/admin/adduser" element={<AddNew />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
