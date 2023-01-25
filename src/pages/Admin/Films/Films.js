@@ -94,7 +94,7 @@ function Films() {
             </NavLink>
             <span
               style={{ cursor: "pointer" }}
-              key={film.maPhim}
+              key={film.tenPhim}
               className="text-2xl"
               onClick={() => {
                 //Gọi action xoá
@@ -110,7 +110,7 @@ function Films() {
             </span>
 
             <NavLink
-              key={1}
+              key={film.hinhAnh}
               className=" mr-2 text-2xl"
               to={`/admin/films/showtime/${film.maPhim}/${film.tenPhim}`}
               onClick={() => {
@@ -127,12 +127,18 @@ function Films() {
     },
   ];
   const data = arrFilmDefault;
+
   const onChange = (pagination, filters, sorter, extra) => {
     console.log("params", pagination, filters, sorter, extra);
   };
   return (
     <div>
-      <Table columns={columns} dataSource={data} onChange={onChange} />
+      <Table
+        columns={columns}
+        dataSource={data}
+        onChange={onChange}
+        rowKey={"maPhim"}
+      />
     </div>
   );
 }

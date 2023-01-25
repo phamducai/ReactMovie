@@ -1,98 +1,219 @@
+import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
 import {
   Button,
   Cascader,
+  Checkbox,
   DatePicker,
   Form,
   Input,
   InputNumber,
-  Radio,
-  Select,
   Switch,
-  TreeSelect,
+  Upload,
 } from "antd";
 import { useState } from "react";
-const App = () => {
-  const [componentSize, setComponentSize] = useState("default");
-  const onFormLayoutChange = ({ size }) => {
-    setComponentSize(size);
+import { useDispatch } from "react-redux";
+import { themPhimUploadHinhAction } from "redux/actions/QuanLyPhimActions";
+import { GROUPID } from "util/settings/config";
+
+const { TextArea } = Input;
+
+// ----------------------------------------------------------------------------------------------
+export default function AddNew() {
+  const [componentDisabled, setComponentDisabled] = useState(false);
+  const [imageBase64, setImageBase64] = useState(null);
+  const [fileImage, setFileImage] = useState(null);
+
+  const dispatch = useDispatch();
+  const onFormLayoutChange = ({ disabled }, e) => {
+    setComponentDisabled(disabled);
   };
+  const [ngayKhoiChieu, setNgayKhoiChieu] = useState(0);
+  const onChange = (date, dateString) => {
+    setNgayKhoiChieu(dateString);
+  };
+
+  const handleChangePic = (e) => {
+    const file = e.target.files[0];
+    // if (file.type === "image/jpeg" || file.type === "image/png") {
+    // }
+    // Tạo đối tượng để đọc file
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      setImageBase64(event.target.result);
+      // Đây là hình base64
+    };
+    setFileImage(file);
+  };
+
   const onFinish = (values) => {
-    console.log("Success:", values);
+    const { tenPhim, trailer, moTa, sapChieu, dangChieu, hot, danhGia } =
+      values;
+
+    // Cách tạo đối tượng cũ nhưng ko bảo mật và chỉ tạo formData mới gửi đi dc
+
+    let formData = new FormData();
+    formData.append("hot", hot);
+    formData.append("tenPhim", tenPhim);
+    formData.append("trailer", trailer);
+    formData.append("moTa", moTa);
+    formData.append("sapChieu", sapChieu);
+    formData.append("dangChieu", dangChieu);
+    formData.append("danhGia", danhGia);
+    formData.append("ngayKhoiChieu", ngayKhoiChieu);
+    formData.append("maNhom", GROUPID);
+    formData.append("File", fileImage, fileImage.name);
+    dispatch(themPhimUploadHinhAction(formData));
   };
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
+
   return (
-    <Form
-      labelCol={{
-        span: 4,
-      }}
-      wrapperCol={{
-        span: 14,
-      }}
-      layout="horizontal"
-      initialValues={{
-        size: componentSize,
-      }}
-      onValuesChange={onFormLayoutChange}
-      size={componentSize}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-      autoComplete="off"
-    >
-      <Form.Item label="Form Size">
-        <Radio.Group>
-          <Radio.Button value="small">Small</Radio.Button>
-          <Radio.Button value="default">Default</Radio.Button>
-          <Radio.Button value="large">Large</Radio.Button>
-        </Radio.Group>
-      </Form.Item>
-      <Form.Item label="Tên phim" name="tenPhim">
-        <Input />
-      </Form.Item>
-      <Form.Item label="Trailer" name="trailer">
-        <Input />
-      </Form.Item>
-      <Form.Item label="Mô tả" name="moTa">
-        <Input />
-      </Form.Item>
-      <Form.Item
-        label="Ngày khởi chiếu"
-        name="ngayKhoiChieu"
-        format={"DD/MM/YYYY"}
+    <>
+      <Checkbox
+        checked={componentDisabled}
+        onChange={(e) => setComponentDisabled(e.target.checked)}
       >
-        <DatePicker />
-      </Form.Item>
-      <Form.Item label="Đang chiếu" valuePropName="checked">
-        <Switch />
-      </Form.Item>
-      <Form.Item label="Sắp chiếu" valuePropName="checked">
-        <Switch />
-      </Form.Item>
-      <Form.Item label="Hot" valuePropName="checked">
-        <Switch />
-      </Form.Item>
+        Form disabled
+      </Checkbox>
 
-      <Form.Item label="Số sao">
-        <InputNumber min={1} max={10} />
-      </Form.Item>
-
-      <Form.Item label="Hình ảnh">
-        <input type="file" accept="image/png, image/jpeg,image/gif,image/png" />
-        <br />
-        <img style={{ width: 150, height: 150 }} alt="..." />
-      </Form.Item>
-      <Form.Item
-        wrapperCol={{
-          offset: 8,
-          span: 16,
+      <Form
+        labelCol={{
+          span: 4,
         }}
+        wrapperCol={{
+          span: 14,
+        }}
+        layout="horizontal"
+        onValuesChange={onFormLayoutChange}
+        disabled={componentDisabled}
+        size={"default"}
+        onFinish={onFinish}
       >
-        <Button type="primary" htmlType="submit">
-          Submit
-        </Button>
-      </Form.Item>
-    </Form>
+        {/* ............... */}
+
+        <Form.Item label="Tên Phim" name="tenPhim">
+          <Input />
+        </Form.Item>
+
+        <Form.Item label="Trailer" name="trailer">
+          <Input />
+        </Form.Item>
+
+        <Form.Item label="Mô Tả" name="moTa">
+          <TextArea rows={4} />
+        </Form.Item>
+
+        <Form.Item label="Ngày khởi chiếu" name="ngayKhoiChieu">
+          <DatePicker onChange={onChange} format={"DD/MM/YYYY"} />
+        </Form.Item>
+
+        <Form.Item
+          label="Đang Chiếu"
+          valuePropName="checked"
+          name="dangChieu"
+          initialValue={false}
+        >
+          <Switch style={{ background: "gray" }} />
+        </Form.Item>
+        <Form.Item
+          label="Sắp Chiếu"
+          valuePropName="checked"
+          name="sapChieu"
+          initialValue={false}
+        >
+          <Switch style={{ background: "gray" }} />
+        </Form.Item>
+        <Form.Item
+          label="Hot"
+          valuePropName="checked"
+          name="hot"
+          initialValue={false}
+        >
+          <Switch style={{ background: "gray" }} />
+        </Form.Item>
+
+        <Form.Item label="Đánh giá" name="danhGia" initialValue={10}>
+          <InputNumber min={1} max={10} />
+        </Form.Item>
+
+        <Form.Item label="Upload" name="hinhAnh">
+          <div>
+            <input
+              type="file"
+              accept="image/png, image/jpeg,image/jpg, image/gìf"
+              onChange={handleChangePic}
+            />
+            {imageBase64 && (
+              <img
+                style={{ width: "200px", height: "200px" }}
+                src={imageBase64}
+                alt="Modal Pic"
+              />
+            )}
+          </div>
+        </Form.Item>
+        <Form.Item label="Tác Vụ">
+          <Button
+            style={{ background: "#1677ff", color: "white" }}
+            type="primary"
+            htmlType="submit"
+          >
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
+    </>
   );
-};
-export default App;
+}
+
+{
+  /* <Form.Item label="TreeSelect">
+          <TreeSelect
+            treeData={[
+              {
+                title: "Light",
+                value: "light",
+                children: [
+                  {
+                    title: "Bamboo",
+                    value: "bamboo",
+                  },
+                ],
+              },
+            ]}
+          />
+        </Form.Item>
+        <Form.Item label="Radio">
+          <Radio.Group>
+            <Radio value="apple"> Apple </Radio>
+            <Radio value="pear"> Pear </Radio>
+          </Radio.Group>
+        </Form.Item>
+        <Form.Item label="Select">
+          <Select>
+            <Select.Option value="demo">Demo</Select.Option>
+          </Select>
+        </Form.Item>  
+         <Form.Item label="Cascader">
+          <Cascader
+            options={[
+              {
+                value: "zhejiang",
+                label: "Zhejiang",
+                children: [
+                  {
+                    value: "hangzhou",
+                    label: "Hangzhou",
+                  },
+                ],
+              },
+            ]}
+          />
+        </Form.Item> 
+         <Form.Item label="InputNumber">
+          <InputNumber />
+        </Form.Item>
+        <Form.Item label="RangePicker">
+          <RangePicker />
+        </Form.Item>
+        */
+}
