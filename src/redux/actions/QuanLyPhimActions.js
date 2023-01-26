@@ -31,10 +31,7 @@ export const layDanhSachPhimAction = (page = 1) => {
 export const layDanhSachPhimActionAll = (tenPhim = "") => {
   return async (dispatch) => {
     try {
-      //Sử dụng tham số thamSo
       const result = await quanLyPhimService.layDanhSachPhim(tenPhim);
-
-      //Sau khi lấy dữ liệu từ api về => redux (reducer)
       dispatch({
         type: SET_ALL_FILMS,
         payload: result.data.content,
@@ -63,8 +60,7 @@ export const capNhatPhimUploadAction = (formData) => {
       let result = await quanLyPhimService.capNhatPhimUpload(formData);
       alert("Cập nhật phim thành công!");
       console.log("result", result.data.content);
-
-      dispatch(layDanhSachPhimAction());
+      dispatch(layDanhSachPhimActionAll());
     } catch (errors) {
       console.log(errors.response?.data);
     }
@@ -90,7 +86,7 @@ export const xoaPhimAction = (maPhim) => {
       const result = await quanLyPhimService.xoaPhim(maPhim);
       console.log("result", result.data.content);
       alert("Xoá phim thành công !");
-      dispatch(layDanhSachPhimAction());
+      dispatch(layDanhSachPhimActionAll());
     } catch (errors) {
       console.log("errors", errors.response?.data);
     }
