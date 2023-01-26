@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Button, DatePicker, Form, InputNumber, Select } from "antd";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 
 import { quanLyRapService } from "services/QuanLyRapService";
@@ -8,7 +8,8 @@ import { useParams } from "react-router-dom";
 import moment from "moment";
 import { quanLyDatVeService } from "services/QuanLyDatVeService";
 
-const ShowTime = () => {
+const ShowTime = (props) => {
+  console.log(props);
   const { id, tenphim } = useParams();
   console.log(id, tenphim);
   const [state, setState] = useState({
@@ -62,8 +63,12 @@ const ShowTime = () => {
       console.log("error", error.response?.data);
     }
   };
+  let film = {};
+  if (localStorage.getItem("filmParams")) {
+    film = JSON.parse(localStorage.getItem("filmParams"));
+  }
   return (
-    <>
+    <div className="container">
       <Form
         labelCol={{
           span: 4,
@@ -77,7 +82,9 @@ const ShowTime = () => {
         }}
         onFinish={onFinish}
       >
-        <Form.Item label="Hệ thống rạp" name="hethongrap">
+        <h3 className="text-2xl">Tạo lịch chiếu - {tenphim}</h3>
+        <img src={film.hinhAnh} alt="..." width={200} height={100} />
+        <Form.Item label="Hệ thống rạp" name="hethongrap" className="mt-3">
           <Select
             required
             options={state.heThongRapChieu?.map((htr, index) => ({
@@ -114,7 +121,7 @@ const ShowTime = () => {
           <Button htmlType="submit">Submit</Button>
         </Form.Item>
       </Form>
-    </>
+    </div>
   );
 };
 export default ShowTime;

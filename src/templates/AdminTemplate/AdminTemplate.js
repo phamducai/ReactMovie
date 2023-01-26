@@ -24,9 +24,7 @@ const items = [
   getItem("User", "sub1", <UserOutlined />, [
     getItem(<Link to="/admin/films">Films</Link>, "2"),
     getItem(<Link to="/admin">Add Film</Link>, "3"),
-    getItem("Alex", "4"),
   ]),
-  getItem(<Link to="/admin/films">Showmore</Link>, "5", <DesktopOutlined />),
 ];
 
 export default function AdminTemplate() {
@@ -46,12 +44,9 @@ export default function AdminTemplate() {
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
       >
-        <div
-          style={{
-            height: 32,
-            margin: 16,
-            background: "rgba(255, 255, 255, 0.2)",
-          }}
+        <img
+          src="https://cyberlearn.vn/wp-content/uploads/2020/03/cyberlearn-min-new-opt2.png"
+          alt=""
         />
         <Menu
           theme="dark"
