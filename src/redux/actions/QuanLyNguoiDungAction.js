@@ -1,14 +1,13 @@
 import { quanLyNguoiDungService } from "../../services/QuanLyNguoiDung";
 import { DANG_NHAP_ACTION } from "./types/QuanLyNguoiDungType";
 
-export const dangNhapAction = async (thongTinDangNhap) => {
-  try {
+export const dangNhapAction = (thongTinDangNhap) => {
+  return async (next) => {
     const result = await quanLyNguoiDungService.dangNhap(thongTinDangNhap);
     console.log(result);
     localStorage.setItem("token", result.data.content.accessToken);
-  } catch (error) {
-    throw error;
-  }
+    next({ type: "LOGIN_SUCCESS", payload: result.data });
+  };
 };
 
 export const layThongTinNguoiDungAction = async (next) => {

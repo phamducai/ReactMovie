@@ -32,14 +32,11 @@ function App() {
         <Route exact path="/" element={<HomeTemplate />} />
         <Route exact path="/detail/:id" element={<DetailMovie />} />
         <Route path="checkout/:maLichChieu" element={<Checkout />} />
-
         <Route path="users" element={<UserTemplate />}>
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<Register />} />
+          <Route path="profile" element={<Profile />} />
         </Route>
-
-        <Route path="profile" element={<Profile />} />
-
         <Route path="admin" element={<AdminTemplate />}>
           <Route path="" element={<AddUser />} />
           <Route path="films" element={<Films />} />

@@ -5,14 +5,10 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { dangNhapAction } from "redux/actions/QuanLyNguoiDungAction";
-// import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const { userLogin } = useSelector((state) => state.QuanLyNguoiDungReducer);
-  console.log(userLogin);
 
   const formik = useFormik({
     initialValues: {
@@ -20,9 +16,9 @@ export default function Login() {
       matKhau: "",
     },
     onSubmit: async (values) => {
+      console.log(values);
       try {
         await dispatch(dangNhapAction(values));
-        //Tại seo ta tại sao là navigate nếu login đạt = store ko thay đổi data là dữ liệu chưa vô nó cứ await đó
         navigate("/");
       } catch (error) {
         console.log("error", error);
