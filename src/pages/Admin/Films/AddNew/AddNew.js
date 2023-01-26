@@ -1,14 +1,12 @@
 import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
 import {
   Button,
-  Cascader,
   Checkbox,
   DatePicker,
   Form,
   Input,
   InputNumber,
   Switch,
-  Upload,
 } from "antd";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -17,8 +15,8 @@ import { GROUPID } from "util/settings/config";
 
 const { TextArea } = Input;
 
-// ----------------------------------------------------------------------------------------------
 export default function AddNew() {
+  
   const [componentDisabled, setComponentDisabled] = useState(false);
   const [imageBase64, setImageBase64] = useState(null);
   const [fileImage, setFileImage] = useState(null);
@@ -34,14 +32,11 @@ export default function AddNew() {
 
   const handleChangePic = (e) => {
     const file = e.target.files[0];
-    // if (file.type === "image/jpeg" || file.type === "image/png") {
-    // }
-    // Tạo đối tượng để đọc file
+    console.log(e.target.files);
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = (event) => {
       setImageBase64(event.target.result);
-      // Đây là hình base64
     };
     setFileImage(file);
   };
@@ -49,9 +44,6 @@ export default function AddNew() {
   const onFinish = (values) => {
     const { tenPhim, trailer, moTa, sapChieu, dangChieu, hot, danhGia } =
       values;
-
-    // Cách tạo đối tượng cũ nhưng ko bảo mật và chỉ tạo formData mới gửi đi dc
-
     let formData = new FormData();
     formData.append("hot", hot);
     formData.append("tenPhim", tenPhim);
@@ -65,7 +57,6 @@ export default function AddNew() {
     formData.append("File", fileImage, fileImage.name);
     dispatch(themPhimUploadHinhAction(formData));
   };
-
   return (
     <>
       <Checkbox
@@ -88,12 +79,9 @@ export default function AddNew() {
         size={"default"}
         onFinish={onFinish}
       >
-        {/* ............... */}
-
         <Form.Item label="Tên Phim" name="tenPhim">
           <Input />
         </Form.Item>
-
         <Form.Item label="Trailer" name="trailer">
           <Input />
         </Form.Item>
@@ -130,7 +118,6 @@ export default function AddNew() {
         >
           <Switch style={{ background: "gray" }} />
         </Form.Item>
-
         <Form.Item label="Đánh giá" name="danhGia" initialValue={10}>
           <InputNumber min={1} max={10} />
         </Form.Item>
@@ -163,57 +150,4 @@ export default function AddNew() {
       </Form>
     </>
   );
-}
-
-{
-  /* <Form.Item label="TreeSelect">
-          <TreeSelect
-            treeData={[
-              {
-                title: "Light",
-                value: "light",
-                children: [
-                  {
-                    title: "Bamboo",
-                    value: "bamboo",
-                  },
-                ],
-              },
-            ]}
-          />
-        </Form.Item>
-        <Form.Item label="Radio">
-          <Radio.Group>
-            <Radio value="apple"> Apple </Radio>
-            <Radio value="pear"> Pear </Radio>
-          </Radio.Group>
-        </Form.Item>
-        <Form.Item label="Select">
-          <Select>
-            <Select.Option value="demo">Demo</Select.Option>
-          </Select>
-        </Form.Item>  
-         <Form.Item label="Cascader">
-          <Cascader
-            options={[
-              {
-                value: "zhejiang",
-                label: "Zhejiang",
-                children: [
-                  {
-                    value: "hangzhou",
-                    label: "Hangzhou",
-                  },
-                ],
-              },
-            ]}
-          />
-        </Form.Item> 
-         <Form.Item label="InputNumber">
-          <InputNumber />
-        </Form.Item>
-        <Form.Item label="RangePicker">
-          <RangePicker />
-        </Form.Item>
-        */
 }

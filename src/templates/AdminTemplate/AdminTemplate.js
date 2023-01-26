@@ -19,18 +19,14 @@ function getItem(label, key, icon, children) {
   };
 }
 const items = [
-  getItem(<Link to="/admin">About</Link>, "1", <PieChartOutlined />),
-  getItem(<Link to="/admin/films">About</Link>, "2", <DesktopOutlined />),
+  getItem(<Link to="/admin">User</Link>, "1", <PieChartOutlined />),
+
   getItem("User", "sub1", <UserOutlined />, [
-    getItem(<Link to="/admin/films">About</Link>, "3"),
-    getItem("Bill", "4"),
-    getItem("Alex", "5"),
+    getItem(<Link to="/admin/films">Films</Link>, "2"),
+    getItem(<Link to="/admin">Add Film</Link>, "3"),
+    getItem("Alex", "4"),
   ]),
-  getItem("Team", "sub2", <TeamOutlined />, [
-    getItem("Team 1", "6"),
-    getItem("Team 2", "8"),
-  ]),
-  getItem("Files", "9", <FileOutlined />),
+  getItem(<Link to="/admin/films">Showmore</Link>, "5", <DesktopOutlined />),
 ];
 
 export default function AdminTemplate() {
@@ -65,22 +61,11 @@ export default function AdminTemplate() {
         />
       </Sider>
       <Layout className="site-layout">
-        <Header
-          style={{
-            padding: 0,
-            background: colorBgContainer,
-          }}
-        />
         <Content
           style={{
             margin: "0 16px",
           }}
         >
-          <Breadcrumb
-            style={{
-              margin: "16px 0",
-            }}
-          ></Breadcrumb>
           <div
             style={{
               padding: 24,

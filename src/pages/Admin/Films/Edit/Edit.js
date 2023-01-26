@@ -29,14 +29,16 @@ const { TextArea } = Input;
 // ----------------------------------------------------------------------------------------------
 export default function EditFilm() {
   const [componentDisabled, setComponentDisabled] = useState(false);
+
   const [imageBase64, setImageBase64] = useState(null);
-  const [fileImage, setFileImage] = useState(null);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
-  console.log(id);
+
   const { thongTinPhim } = useSelector((state) => state.QuanLyPhimReducer);
+
+  const [fileImage, setFileImage] = useState(null);
 
   useEffect(() => {
     dispatch(layThongTinPhimAction(id));
@@ -53,6 +55,7 @@ export default function EditFilm() {
 
   const handleChangePic = (e) => {
     const file = e.target.files[0];
+
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = (event) => {
@@ -64,6 +67,7 @@ export default function EditFilm() {
   const onFinish = (values) => {
     const { tenPhim, trailer, moTa, sapChieu, dangChieu, hot, danhGia } =
       values;
+
     let formData = new FormData();
     formData.append("maPhim", id);
     formData.append("dangChieu", dangChieu);
@@ -75,14 +79,21 @@ export default function EditFilm() {
     formData.append("danhGia", danhGia);
     formData.append("ngayKhoiChieu", ngayKhoiChieu);
     formData.append("maNhom", GROUPID);
-    formData.append("File", fileImage, fileImage.name);
+    if (values.hinhAnh !== undefined) {
+      formData.append("File", fileImage, fileImage.name);
+    } else {
+      formData.append("File", null);
+    }
     dispatch(capNhatPhimUploadAction(formData));
+    navigate("/admin/films");
   };
+
   const { tenPhim, trailer, moTa, sapChieu, dangChieu, hot, danhGia } =
     thongTinPhim;
+
   const lich = thongTinPhim.ngayKhoiChieu;
   const lichFilm = moment(lich).format("DD/MM/YYYY");
-  console.log(thongTinPhim);
+
   return (
     <>
       {tenPhim && (
@@ -99,12 +110,7 @@ export default function EditFilm() {
           size={"default"}
           onFinish={onFinish}
         >
-          <Form.Item
-            label="Tên Phim"
-            name="tenPhim"
-            values="haha"
-            initialValue={tenPhim}
-          >
+          <Form.Item label="Tên Phim" name="tenPhim" initialValue={tenPhim}>
             <Input />
           </Form.Item>
 
@@ -132,14 +138,24 @@ export default function EditFilm() {
           >
             <Switch style={{ background: "gray" }} />
           </Form.Item>
-          <Form.Item label="Sắp Chiếu" valuePropName="checked" name="sapChieu">
+          <Form.Item
+            label="Sắp Chiếu"
+            valuePropName="checked"
+            name="sapChieu"
+            initialValue={sapChieu}
+          >
             <Switch style={{ background: "gray" }} />
           </Form.Item>
-          <Form.Item label="Hot" valuePropName="checked" initialValue={hot}>
+          <Form.Item
+            label="Hot"
+            valuePropName="checked"
+            name="hot"
+            initialValue={hot}
+          >
             <Switch style={{ background: "gray" }} />
           </Form.Item>
 
-          <Form.Item label="Đánh giá" name="danhGia">
+          <Form.Item label="Đánh giá" name="danhGia" initialValue={danhGia}>
             <InputNumber min={1} max={10} />
           </Form.Item>
 
@@ -150,13 +166,12 @@ export default function EditFilm() {
                 accept="image/png, image/jpeg,image/jpg, image/gìf"
                 onChange={handleChangePic}
               />
-              {imageBase64 && (
-                <img
-                  style={{ width: "200px", height: "200px" }}
-                  src={imageBase64}
-                  alt="Modal Pic"
-                />
-              )}
+
+              <img
+                style={{ width: "150px", height: "150px" }}
+                src={imageBase64 === null ? thongTinPhim.hinhAnh : imageBase64}
+                alt="Modal Pic"
+              />
             </div>
           </Form.Item>
           <Form.Item label="Tác Vụ">

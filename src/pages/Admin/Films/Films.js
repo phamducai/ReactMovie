@@ -1,17 +1,21 @@
 import React, { useEffect } from "react";
-import { Table } from "antd";
+import { Button, Table } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import {
   layDanhSachPhimActionAll,
   xoaPhimAction,
 } from "redux/actions/QuanLyPhimActions";
 import { Fragment } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import {
   CalendarOutlined,
   DeleteOutlined,
   EditOutlined,
 } from "@ant-design/icons";
+
+import { Input } from "antd";
+import { getCineInfoListSystemAction } from "redux/actions/QuanLyRapActions";
+const { Search } = Input;
 function Films() {
   const arrFilmDefault = useSelector(
     (state) => state.QuanLyPhimReducer.allFilm
@@ -97,27 +101,25 @@ function Films() {
               key={film.tenPhim}
               className="text-2xl"
               onClick={() => {
-                //Gọi action xoá
                 if (
                   window.confirm("Bạn có chắc muốn xoá phim " + film.tenPhim)
                 ) {
-                  //Gọi action
                   dispatch(xoaPhimAction(film.maPhim));
                 }
               }}
             >
               <DeleteOutlined style={{ color: "red" }} />{" "}
             </span>
-
             <NavLink
               key={film.hinhAnh}
               className=" mr-2 text-2xl"
               to={`/admin/films/showtime/${film.maPhim}/${film.tenPhim}`}
               onClick={() => {
+                dispatch(getCineInfoListSystemAction());
                 localStorage.setItem("filmParams", JSON.stringify(film));
               }}
             >
-              <CalendarOutlined style={{ color: "green" }} />{" "}
+              <CalendarOutlined style={{ color: "green" }} />
             </NavLink>
           </Fragment>
         );
@@ -131,8 +133,25 @@ function Films() {
   const onChange = (pagination, filters, sorter, extra) => {
     console.log("params", pagination, filters, sorter, extra);
   };
+
+  const onsearch = async (e) => {
+    await dispatch(layDanhSachPhimActionAll(e.target.value));
+  };
   return (
     <div>
+      <h1 className="text-3xl mb-5">Quản Lý Phim</h1>
+
+      <Link to="/admin/films/addnew">
+        <Button className="mb-5">Thêm Phim</Button>
+      </Link>
+
+      <Search
+        placeholder="tim kiem phim"
+        enterButton="Search"
+        size="large"
+        onChange={onsearch}
+        name="search"
+      />
       <Table
         columns={columns}
         dataSource={data}

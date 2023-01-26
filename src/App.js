@@ -15,7 +15,6 @@ import EditFilm from "pages/Admin/Films/Edit/Edit";
 import Films from "pages/Admin/Films/Films";
 import ShowTime from "pages/Admin/Showtime/ShowTime";
 import AddUser from "pages/Admin/Films/AddNew/AddNew";
-import Test from "pages/Admin/Films/AddNew/test";
 
 function App() {
   const dispatch = useDispatch();
@@ -40,8 +39,7 @@ function App() {
           <Route path="" element={<AddUser />} />
           <Route path="films" element={<Films />} />
           <Route path="films/edit/:id" element={<EditFilm />} />
-          <Route path="showtime" element={<ShowTime />} />
-          <Route path="test" element={<Test />} />
+          <Route path="films/showtime/:id/:tenphim" element={<ShowTime />} />
         </Route>
       </Routes>
     </BrowserRouter>
