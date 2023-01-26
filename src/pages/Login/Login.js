@@ -1,33 +1,26 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/img-redundant-alt */
-import React from "react";
 import { useFormik } from "formik";
-import { NavLink, useNavigate } from "react-router-dom";
-import { dangNhapAction } from "redux/actions/QuanLyNguoiDungAction";
-import { useSelector } from "react-redux";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
+// import { loginAction } from "../../redux/actions/QuanLyNguoiDungAction";
 
-function Login() {
-  const flag = useSelector((state) => state.CarouselReducer.flag);
+export default function Login() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { userLogin } = useSelector((state) => state.QuanLyNguoiDungReducer);
+  console.log(userLogin);
+
   const formik = useFormik({
     initialValues: {
       taiKhoan: "",
       matKhau: "",
     },
-    onSubmit: async (values) => {
-      try {
-        await dangNhapAction(values);
-        if (flag) {
-          navigate(`/checkout/${flag?.itemLich.maLichChieu}`);
-        } else {
-          navigate("/");
-        }
-        window.location.reload();
-      } catch (error) {
-        console.log(error);
-      }
-    },
   });
-  console.log(flag);
+
   return (
     <form
       onSubmit={formik.handleSubmit}
@@ -100,7 +93,7 @@ xl:text-bold"
                 <div>
                   <a
                     className="text-xs font-display font-semibold text-indigo-600 hover:text-indigo-800
-                cursor-pointer"
+                  cursor-pointer"
                   >
                     Forgot Password?
                   </a>
@@ -118,8 +111,8 @@ xl:text-bold"
               <button
                 type="submit"
                 className="bg-indigo-500 text-gray-100 p-4 w-full rounded-full tracking-wide
-        font-semibold font-display focus:outline-none focus:shadow-outline hover:bg-indigo-600
-        shadow-lg"
+          font-semibold font-display focus:outline-none focus:shadow-outline hover:bg-indigo-600
+          shadow-lg"
               >
                 Log In
               </button>
@@ -136,5 +129,3 @@ xl:text-bold"
     </form>
   );
 }
-
-export default Login;

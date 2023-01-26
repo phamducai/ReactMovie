@@ -7,7 +7,6 @@ import { useDispatch } from "react-redux";
 import { layThongTinNguoiDungAction } from "redux/actions/QuanLyNguoiDungAction";
 import { useEffect } from "react";
 import Profile from "pages/Profile/Profile";
-import Register from "pages/Register/Register/Register";
 
 import AdminTemplate from "templates/AdminTemplate/AdminTemplate";
 import Dashboard from "pages/Admin/Dashboard/Dashboard";
@@ -15,7 +14,8 @@ import EditFilm from "pages/Admin/Films/Edit/Edit";
 import Films from "pages/Admin/Films/Films";
 import ShowTime from "pages/Admin/Showtime/ShowTime";
 import AddUser from "pages/Admin/Films/AddNew/AddNew";
-import UserTemplate from "templates/UserTemplate/User";
+import { Register } from "pages/Register/Register";
+import UserTemplate from "templates/UserTemplate/UserTemplate";
 
 function App() {
   const dispatch = useDispatch();
