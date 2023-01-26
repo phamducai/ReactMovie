@@ -46,7 +46,7 @@ export default function AdminTemplate() {
       >
         <img
           src="https://cyberlearn.vn/wp-content/uploads/2020/03/cyberlearn-min-new-opt2.png"
-          alt=""
+          alt="haha"
         />
         <Menu
           theme="dark"
