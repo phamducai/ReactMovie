@@ -15,6 +15,7 @@ import EditFilm from "pages/Admin/Films/Edit/Edit";
 import Films from "pages/Admin/Films/Films";
 import ShowTime from "pages/Admin/Showtime/ShowTime";
 import AddUser from "pages/Admin/Films/AddNew/AddNew";
+import UserTemplate from "templates/UserTemplate/User";
 
 function App() {
   const dispatch = useDispatch();
@@ -30,10 +31,14 @@ function App() {
         <Route path="*" element={<Navigate to="/" />} />
         <Route exact path="/" element={<HomeTemplate />} />
         <Route exact path="/detail/:id" element={<DetailMovie />} />
-        <Route path="/checkout/:maLichChieu" element={<Checkout />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="checkout/:maLichChieu" element={<Checkout />} />
+
+        <Route path="users" element={<UserTemplate />}>
+          <Route path="login" element={<Login />} />
+          <Route path="signup" element={<Register />} />
+        </Route>
+
+        <Route path="profile" element={<Profile />} />
 
         <Route path="admin" element={<AdminTemplate />}>
           <Route path="" element={<AddUser />} />
