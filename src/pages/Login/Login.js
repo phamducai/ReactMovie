@@ -4,8 +4,8 @@ import { useFormik } from "formik";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { dangNhapAction } from "redux/actions/QuanLyNguoiDungAction";
 // import { useNavigate } from "react-router-dom";
-// import { loginAction } from "../../redux/actions/QuanLyNguoiDungAction";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -18,6 +18,16 @@ export default function Login() {
     initialValues: {
       taiKhoan: "",
       matKhau: "",
+    },
+    onSubmit: async (values) => {
+      try {
+        await dispatch(dangNhapAction(values));
+        //Tại seo ta tại sao là navigate nếu login đạt = store ko thay đổi data là dữ liệu chưa vô nó cứ await đó
+        navigate("/");
+      } catch (error) {
+        console.log("error", error);
+      }
+      console.log("values", values);
     },
   });
 
