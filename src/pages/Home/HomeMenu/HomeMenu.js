@@ -1,7 +1,7 @@
 import React from "react";
 import { Tabs, Button } from "antd";
 import moment from "moment";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "./homeMenu.css";
 
 function HomeMenu(props) {
@@ -55,10 +55,7 @@ function HomeMenu(props) {
                                     .slice(0, 2)
                                     .map((itemhour) => {
                                       return (
-                                        <Button
-                                          className="bg-btn"
-                                          type="default"
-                                          size="default"
+                                        <NavLink
                                           key={itemhour.maLichChieu}
                                           onClick={() => {
                                             if (flagLogin) {
@@ -77,7 +74,7 @@ function HomeMenu(props) {
                                           {moment(
                                             itemhour?.ngayChieuGioChieu
                                           ).format("DD/MM/YYYY ~HH:MM")}
-                                        </Button>
+                                        </NavLink>
                                       );
                                     })}
                                 </div>
