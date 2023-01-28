@@ -1,13 +1,4 @@
-import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
-import {
-  Button,
-  Checkbox,
-  DatePicker,
-  Form,
-  Input,
-  InputNumber,
-  Switch,
-} from "antd";
+import { Button, DatePicker, Form, Input, InputNumber, Switch } from "antd";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { themPhimUploadHinhAction } from "redux/actions/QuanLyPhimActions";
@@ -15,8 +6,7 @@ import { GROUPID } from "util/settings/config";
 
 const { TextArea } = Input;
 
-export default function AddNew() {
-  
+export default function AddFilm() {
   const [componentDisabled, setComponentDisabled] = useState(false);
   const [imageBase64, setImageBase64] = useState(null);
   const [fileImage, setFileImage] = useState(null);
@@ -59,13 +49,6 @@ export default function AddNew() {
   };
   return (
     <>
-      <Checkbox
-        checked={componentDisabled}
-        onChange={(e) => setComponentDisabled(e.target.checked)}
-      >
-        Form disabled
-      </Checkbox>
-
       <Form
         labelCol={{
           span: 4,

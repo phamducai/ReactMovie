@@ -1,15 +1,12 @@
 import React from "react";
-import {
-  FileOutlined,
-  PieChartOutlined,
-  UserOutlined,
-  DesktopOutlined,
-  TeamOutlined,
-} from "@ant-design/icons";
-import { Breadcrumb, Layout, Menu, theme } from "antd";
+import { PieChartOutlined, UserOutlined } from "@ant-design/icons";
+import { Layout, Menu, theme } from "antd";
 import { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
-const { Header, Content, Footer, Sider } = Layout;
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { LayDanhSachKhachHang } from "redux/actions/QuanLyNguoiDungAction";
+const { Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
   return {
     key,
@@ -19,15 +16,22 @@ function getItem(label, key, icon, children) {
   };
 }
 const items = [
-  getItem(<Link to="/admin">User</Link>, "1", <PieChartOutlined />),
+  getItem(<Link to="/admin">User</Link>, "1", <UserOutlined />),
 
-  getItem("User", "sub1", <UserOutlined />, [
+  getItem("Films", "sub1", <PieChartOutlined />, [
     getItem(<Link to="/admin/films">Films</Link>, "2"),
-    getItem(<Link to="/admin">Add Film</Link>, "3"),
+    getItem(<Link to="/admin/films/addfilm">Add Film</Link>, "3"),
   ]),
 ];
 
 export default function AdminTemplate() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(LayDanhSachKhachHang());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },

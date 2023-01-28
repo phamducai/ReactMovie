@@ -15,8 +15,10 @@ import {
 } from "redux/actions/QuanLyDatVeActions";
 
 import { ThongTinDatVe } from "_core/models/ThongTinDatVe";
+import { useTranslation } from "react-i18next";
 
 function Checkout(props) {
+  const { t } = useTranslation();
   const { maLichChieu } = useParams();
   const dispatch = useDispatch();
 
@@ -259,6 +261,7 @@ function KetQuaDatVe(props) {
 }
 
 export default function CheckoutTab(props) {
+  const { t } = useTranslation();
   const { tabActive } = useSelector((state) => state.QuanLyDatVeReducer);
   const userLogin = useSelector(
     (state) => state.QuanLyNguoiDungReducer.thongTinNguoiDung
@@ -283,7 +286,7 @@ export default function CheckoutTab(props) {
         <Fragment>
           <button
             onClick={() => {
-              navigate("/profile");
+              navigate(`/profile/${userLogin.taiKhoan}`);
             }}
           >
             {" "}
@@ -309,7 +312,7 @@ export default function CheckoutTab(props) {
             }}
             className="text-blue-800"
           >
-            Đăng xuất
+            {t("Log out")}
           </Button>
         </Fragment>
       ) : (

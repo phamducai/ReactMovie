@@ -19,10 +19,11 @@ export class baseService {
     });
   };
 
-  get = (url) => {
+  get = (url, model = "") => {
     return requester({
       url: `${url}`,
       method: "GET",
+      data: model,
     });
   };
 

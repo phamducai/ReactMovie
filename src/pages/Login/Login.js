@@ -3,10 +3,14 @@
 import { useFormik } from "formik";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { dangNhapAction } from "redux/actions/QuanLyNguoiDungAction";
 
-export default function Login() {
+export default function Login(props) {
+  let flag = useSelector((state) => state.CarouselReducer.flag);
+  console.log(flag);
+
+  console.log(props);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -15,15 +19,31 @@ export default function Login() {
       taiKhoan: "",
       matKhau: "",
     },
+    validate: (values) => {
+      const errors = {};
+      if (!values.taiKhoan) {
+        errors.taiKhoan = "Required";
+      } else if (!/[A-z]|[0-9]$/i.test(values.taiKhoan)) {
+        errors.taiKhoan = "Invalid useName";
+      }
+      if (!values.matKhau) {
+        errors.matKhau = "Required";
+      }
+      return errors;
+    },
     onSubmit: async (values) => {
-      console.log(values);
       try {
         await dispatch(dangNhapAction(values));
-        navigate("/");
+        if (flag) {
+          navigate(`/checkout/${flag.itemLich.maLichChieu}`);
+          window.location.reload();
+        } else {
+          navigate("/");
+          window.location.reload();
+        }
       } catch (error) {
-        console.log("error", error);
+        alert("Sai Mat Khau Hoac Ten Dang Nhap");
       }
-      console.log("values", values);
     },
   });
 
@@ -70,7 +90,7 @@ export default function Login() {
           </div>
         </div>
       </div>
-      <div className="mt-10 px-12 sm:px-24 md:px-48 lg:px-12 lg:mt-16 xl:px-24 xl:max-w-2xl">
+      <div className="mt-4 px-12 sm:px-24 md:px-48 lg:px-12 lg:mt-8 xl:px-24 xl:max-w-2xl">
         <h2
           className="text-center text-4xl text-indigo-900 font-display font-semibold lg:text-left xl:text-5xl
 xl:text-bold"
@@ -89,6 +109,8 @@ xl:text-bold"
                 type="text"
                 placeholder="mike@gmail.com"
                 onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.taiKhoan}
               />
             </div>
             <div className="mt-8">
@@ -126,9 +148,12 @@ xl:text-bold"
           </div>
           <div className="mt-12 text-sm font-display font-semibold text-gray-700 text-center">
             Don't have an account ?{" "}
-            <a className="cursor-pointer text-indigo-600 hover:text-indigo-800">
+            <NavLink
+              to="/users/signup"
+              className="cursor-pointer text-indigo-600 hover:text-indigo-800"
+            >
               Sign up
-            </a>
+            </NavLink>
           </div>
         </div>
       </div>

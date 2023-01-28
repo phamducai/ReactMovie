@@ -1,17 +1,16 @@
-import HomeCarousel from "./Layout/HomeCarousel/HomeCarousel";
-import Home from "pages/Home/Home";
+import React from "react";
 import Header from "./Layout/Header/Header";
 import { useEffect } from "react";
+import { Outlet } from "react-router-dom";
 
-function HomeTemplate() {
+function HomeTemplate(props) {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
   return (
     <div className="">
       <Header />
-      <HomeCarousel />
-      <Home />
+      <Outlet />
     </div>
   );
 }

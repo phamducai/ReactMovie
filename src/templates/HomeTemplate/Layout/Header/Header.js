@@ -4,6 +4,7 @@ import { Dropdown, Select, Space } from "antd";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useMemo } from "react";
 export default function Header() {
   let profile = useSelector(
     (state) => state.QuanLyNguoiDungReducer.thongTinNguoiDung
@@ -74,7 +75,7 @@ export default function Header() {
       ) : (
         <NavLink
           to="/login"
-          className="no-underline  text-white   text-sm px-4 transition-all font-medium leading-tight"
+          className="no-underline text-white text-sm px-4 transition-all font-medium leading-tight"
         >
           {t("Sign In")}
         </NavLink>
@@ -95,7 +96,7 @@ export default function Header() {
         </NavLink>
       ) : (
         <NavLink
-          to="/signup"
+          to="users/signup"
           className="no-underline  text-white   text-sm px-4 transition-all font-medium leading-tight"
         >
           {t("Sign Up")}
@@ -166,7 +167,7 @@ export default function Header() {
             </div>
           ) : (
             <nav className="flex items-center">
-              <NavLink to="/login" className="no-underline">
+              <NavLink to="users/login" className="no-underline">
                 <div className="flex flex-item justify-end text-white no-underline">
                   {t("Sign In")}
                 </div>
@@ -179,14 +180,23 @@ export default function Header() {
             </nav>
           )}
           <Select
-            defaultValue="en"
+            defaultValue={t("lang")}
             style={{ width: 70 }}
             onChange={handleChange}
             className="lg:ml-2 ml-1"
           >
-            <Select.Option value="en">Eng</Select.Option>
-            <Select.Option value="vi">Vi</Select.Option>
-            <Select.Option value="chi">Chi</Select.Option>
+            <Select.Option value={t("lang")} name="opion">
+              {t("lang")}
+            </Select.Option>
+            <Select.Option value="en" name="en">
+              Eng
+            </Select.Option>
+            <Select.Option value="vi" name="vi">
+              Vi
+            </Select.Option>
+            <Select.Option value="chi" name="chi">
+              Chi
+            </Select.Option>
           </Select>
         </div>
         <div

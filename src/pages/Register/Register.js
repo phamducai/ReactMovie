@@ -1,118 +1,184 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable jsx-a11y/img-redundant-alt */
+import clsx from "clsx";
+import { useFormik } from "formik";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink, useNavigate } from "react-router-dom";
+import { dangKiAction } from "redux/actions/QuanLyNguoiDungAction";
 
-export const Register = () => {
+export default function Register(props) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const formik = useFormik({
+    initialValues: {
+      taiKhoan: "",
+      matKhau: "",
+      hoten: "",
+      phone: "",
+      email: "",
+      nhaplaimatkhau: "",
+    },
+
+    onSubmit: async (values, { setSubmitting }) => {
+      const data = {
+        taiKhoan: values.taiKhoan,
+        matKhau: values.matKhau,
+        email: values.email,
+        soDt: values.phone,
+        hoTen: values.hoten,
+        maNhom: "GP00",
+      };
+      try {
+        await dispatch(dangKiAction(data));
+        alert("Dang Ki Thanh Cong");
+        navigate("/users/login");
+      } catch (error) {
+        alert("Dang Ki That bai");
+      }
+    },
+    validate: (values) => {
+      console.log(values);
+      const errors = {};
+      if (!values.taiKhoan) {
+        errors.taiKhoan = "Required";
+      } else if (!/^[A-z]|[0-9]$/i.test(values.email)) {
+        errors.email = "Invalid email address";
+      }
+      if (!values.matKhau) {
+        errors.matKhau = "Required";
+      }
+      if (values.matKhau !== values.nhaplaimatkhau) {
+        errors.nhaplaimatkhau = "nhap sai mat khau";
+      }
+      if (!values.hoten) {
+        errors.hoten = "Required";
+      }
+      if (!values.email) {
+        errors.email = "Required";
+      }
+      if (!values.phone) {
+        errors.phone = "Required";
+      }
+
+      return errors;
+    },
+  });
+
   return (
-    <section className="bg-gray-50 lg:w-1/2 xl:max-w-screen-sm ">
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <a
-          href="#"
-          className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
+    <form
+      onSubmit={formik.handleSubmit}
+      className="lg:w-1/2 xl:max-w-screen-sm"
+    >
+      <div className=" mt-4 px-12 sm:px-24 md:px-48 lg:px-12 xl:px-24 lg:mt-8 xl:max-w-2xl">
+        <h2
+          className="text-center text-4xl text-indigo-900 font-display font-semibold lg:text-left xl:text-5xl
+xl:text-bold"
         >
-          <img
-            className="w-8 h-8 mr-2"
-            src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
-            alt="logo"
-          />
-          Flowbite
-        </a>
-        <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-              Create and account
-            </h1>
-            <form className="space-y-4 md:space-y-6" action="#">
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Your email
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="name@company.com"
-                  required
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="password"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Password
-                </label>
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  placeholder="••••••••"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  required
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="confirm-password"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Confirm password
-                </label>
-                <input
-                  type="confirm-password"
-                  name="confirm-password"
-                  id="confirm-password"
-                  placeholder="••••••••"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  required
-                />
-              </div>
-              <div className="flex items-start">
-                <div className="flex items-center h-5">
-                  <input
-                    id="terms"
-                    aria-describedby="terms"
-                    type="checkbox"
-                    className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                    required
-                  />
-                </div>
-                <div className="ml-3 text-sm">
-                  <label
-                    htmlFor="terms"
-                    className="font-light text-gray-500 dark:text-gray-300"
-                  >
-                    I accept the{" "}
-                    <a
-                      className="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                      href="#"
-                    >
-                      Terms and Conditions
-                    </a>
-                  </label>
-                </div>
-              </div>
+          Sign Up
+        </h2>
+        <div className="mt-10">
+          <div>
+            <div>
+              <input
+                name="taiKhoan"
+                className="w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500"
+                type="text"
+                placeholder="User Name"
+                onChange={formik.handleChange}
+                value={formik.values.taiKhoan}
+              />
+              {formik.errors.taiKhoan && formik.touched.taiKhoan && (
+                <span>{formik.errors.taiKhoan}</span>
+              )}
+            </div>
+            <div>
+              <input
+                name="matKhau"
+                className="w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500"
+                type="password"
+                placeholder="PassWord"
+                onChange={formik.handleChange}
+                value={formik.values.matKhau}
+              />{" "}
+              {formik.errors.matKhau && formik.touched.matKhau && (
+                <span>{formik.errors.matKhau}</span>
+              )}
+            </div>
+            <div>
+              <input
+                name="nhaplaimatkhau"
+                className="w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500"
+                type="password"
+                placeholder="PassWord Confirm"
+                onChange={formik.handleChange}
+                value={formik.values.nhaplaimatkhau}
+              />
+              {formik.errors.nhaplaimatkhau &&
+                formik.touched.nhaplaimatkhau && (
+                  <span>{formik.errors.nhaplaimatkhau}</span>
+                )}
+            </div>
+            <div>
+              <input
+                name="hoten"
+                className="w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500"
+                type="text"
+                placeholder="Full Name"
+                onChange={formik.handleChange}
+                value={formik.values.hoten}
+              />
+              {formik.errors.hoten && formik.touched.hoten && (
+                <span>{formik.errors.hoten}</span>
+              )}
+            </div>
+            <div>
+              <input
+                name="email"
+                className="w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500"
+                type="text"
+                placeholder="mike@gmail.com"
+                onChange={formik.handleChange}
+                value={formik.values.email}
+              />{" "}
+              {formik.errors.email && formik.touched.email && (
+                <span>{formik.errors.email}</span>
+              )}
+            </div>
+            <div>
+              <input
+                name="phone"
+                className="w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500"
+                type="text"
+                placeholder="Phone Number"
+                onChange={formik.handleChange}
+                value={formik.values.phone}
+              />{" "}
+              {formik.errors.phone && formik.touched.phone && (
+                <span>{formik.errors.phone}</span>
+              )}
+            </div>
+            <div className="mt-10">
               <button
                 type="submit"
-                className="w-full text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                // disabled={formik.isSubmitting}
+                className={clsx(
+                  " text-gray-100 p-4 w-full rounded-full tracking-wide font-semibold font-display focus:outline-none focus:shadow-outlineshadow-lg",
+                  {
+                    "bg-indigo-500 hover:bg-indigo-600 ":
+                      formik.isSubmitting === false,
+                    "bg-slate-600  hover:bg-red-500":
+                      formik.isSubmitting === true,
+                  }
+                )}
               >
-                Create an account
+                Sign Up
               </button>
-              <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                Already have an account?{" "}
-                <a
-                  href="#"
-                  className="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                >
-                  Login here
-                </a>
-              </p>
-            </form>
+            </div>
           </div>
         </div>
       </div>
-    </section>
+    </form>
   );
-};
+}

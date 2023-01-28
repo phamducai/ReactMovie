@@ -141,7 +141,7 @@ function Films() {
     <div>
       <h1 className="text-3xl mb-5">Quản Lý Phim</h1>
 
-      <Link to="/admin/films/addnew">
+      <Link to="/admin/films/addfilm">
         <Button className="mb-5">Thêm Phim</Button>
       </Link>
 

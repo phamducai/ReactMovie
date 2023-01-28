@@ -127,7 +127,7 @@ function DetailMovie(props) {
                                                   `/checkout/${itemLich.maLichChieu}`
                                                 );
                                               } else {
-                                                navigate("/login");
+                                                navigate("/users/login");
                                                 dispatch({
                                                   type: "DANGODATVE",
                                                   flag: { itemLich },
