@@ -18,10 +18,35 @@ export class QuanLyNguoiDungService extends baseService {
   };
 
   layDanhSachNguoiDungGp01 = (data = "", Group = "GP01") => {
-    return this.get(
-      `/api/QuanLyNguoiDung/LayDanhSachNguoiDung?maNhom=${Group}`,
-      data
-    );
+    if (data.trim() !== "") {
+      return this.get(
+        `api/QuanLyNguoiDung/LayDanhSachNguoiDung?MaNhom=${Group}&tuKhoa=${data}`
+      );
+    } else {
+      return this.get(
+        `/api/QuanLyNguoiDung/LayDanhSachNguoiDung?MaNhom=${Group}`
+      );
+    }
+  };
+  TimKiemNguoiDung = (data = "", Group = "GP01") => {
+    if (data.trim() !== "") {
+      return this.get(
+        `/api/QuanLyNguoiDung/TimKiemNguoiDung?MaNhom=${Group}&tuKhoa=${data}`
+      );
+    } else {
+      return this.get(`/api/QuanLyNguoiDung/TimKiemNguoiDung?MaNhom=${Group}`);
+    }
+  };
+
+  xoaUser = (taiKhoan) => {
+    console.log(taiKhoan);
+    return this.delete(`api/QuanLyNguoiDung/XoaNguoiDung?TaiKhoan=${taiKhoan}`);
+  };
+  ThemNguoiDung = (data = "") => {
+    return this.post(`api/QuanLyNguoiDung/ThemNguoiDung`, data);
+  };
+  CapNhatThongTinNguoiDung = (data = "") => {
+    return this.post(`/api/QuanLyNguoiDung/CapNhatThongTinNguoiDung`, data);
   };
 }
 

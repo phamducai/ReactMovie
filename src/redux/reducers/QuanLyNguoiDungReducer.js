@@ -7,6 +7,7 @@ import {
 const initialState = {
   thongTinNguoiDung: null,
   danhsachkhachhang: [],
+  thongTinKhach: [],
 };
 
 export const QuanLyNguoiDungReducer = (state = initialState, action) => {
@@ -18,7 +19,12 @@ export const QuanLyNguoiDungReducer = (state = initialState, action) => {
       case DANH_SACH_KHACH_HANG:
         draft.danhsachkhachhang = action.danhsachkhachhang;
         break;
-
+      case "THONG_TIN_KHACH":
+        draft.thongTinKhach = action.thongTinKhach;
+        break;
+      case "DELETE":
+        draft.thongTinKhach = [];
+        break;
       default:
         break;
     }

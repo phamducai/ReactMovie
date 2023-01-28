@@ -4,11 +4,13 @@ import { Dropdown, Select, Space } from "antd";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { useMemo } from "react";
+
 export default function Header() {
   let profile = useSelector(
     (state) => state.QuanLyNguoiDungReducer.thongTinNguoiDung
   );
+  console.log(profile);
+
   const { t, i18n } = useTranslation();
   const handleChange = (value) => {
     console.log(value);
@@ -65,9 +67,7 @@ export default function Header() {
       key: "5",
       label: profile ? (
         <NavLink
-          onClick={() => {
-            navigate("/profile");
-          }}
+          to={`/profile/${profile.taiKhoan}`}
           className="no-underline  text-white  text-sm px-4 transition-all font-medium leading-tight"
         >
           {profile.taiKhoan.charAt(0).toUpperCase() + profile.taiKhoan.slice(1)}
@@ -146,9 +146,7 @@ export default function Header() {
           {profile ? (
             <div className="flex items-center ml-60">
               <NavLink
-                onClick={() => {
-                  navigate("/profile");
-                }}
+                to={`/profile/${profile?.taiKhoan}`}
                 className="no-underline  text-white   text-sm px-4 transition-all font-medium leading-tight"
               >
                 {profile.taiKhoan.charAt(0).toUpperCase() +

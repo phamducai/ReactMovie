@@ -41,7 +41,7 @@ const Profile = () => {
         form={form}
         name="horizontal_login"
         onFinish={onFinish}
-        className="container grid grid-cols-2 gap-x-10 "
+        className="container grid grid-cols-2 gap-x-10 mt-20"
       >
         <Form.Item
           initialValue={email}
@@ -139,7 +139,7 @@ const Profile = () => {
                   .length
               }
             >
-              Log in
+              Update User
             </Button>
           )}
         </Form.Item>

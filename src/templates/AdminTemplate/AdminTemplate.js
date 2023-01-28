@@ -2,10 +2,13 @@ import React from "react";
 import { PieChartOutlined, UserOutlined } from "@ant-design/icons";
 import { Layout, Menu, theme } from "antd";
 import { useState } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Navigate, Outlet } from "react-router-dom";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { LayDanhSachKhachHang } from "redux/actions/QuanLyNguoiDungAction";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  LayDanhSachKhachHang,
+  layThongTinNguoiDungAction,
+} from "redux/actions/QuanLyNguoiDungAction";
 const { Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
   return {
@@ -15,6 +18,7 @@ function getItem(label, key, icon, children) {
     label,
   };
 }
+
 const items = [
   getItem(<Link to="/admin">User</Link>, "1", <UserOutlined />),
 
@@ -25,64 +29,81 @@ const items = [
 ];
 
 export default function AdminTemplate() {
+  const userLogin = useSelector(
+    (state) => state.QuanLyNguoiDungReducer.thongTinNguoiDung
+  );
   const dispatch = useDispatch();
-
   useEffect(() => {
-    dispatch(LayDanhSachKhachHang());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // dispatch async action fetch profile
+    dispatch(layThongTinNguoiDungAction);
   }, []);
-
   const [collapsed, setCollapsed] = useState(false);
+  if (userLogin?.maLoaiNguoiDung !== "QuanTri") {
+    alert("Bạn không có quyền truy cập vào trang này !");
+    return <Navigate to="/" replace={true} />;
+  }
+
+  // setTimeout(myGreeting, 2000);
+  // function myGreeting() {
+  //   if (userLogin?.maLoaiNguoiDung !== "QuanTri") {
+  //     alert("Bạn không có quyền truy cập vào trang này !");
+  //     return <Navigate to="/" replace={true} />;
+  //   }
+  //   return <Navigate to="/admin" replace={true} />;
+  // }
+
   const {
     token: { colorBgContainer },
   } = theme.useToken();
 
   return (
-    <Layout
-      style={{
-        minHeight: "100vh",
-      }}
-    >
-      <Sider
-        collapsible
-        collapsed={collapsed}
-        onCollapse={(value) => setCollapsed(value)}
+    userLogin?.maLoaiNguoiDung && (
+      <Layout
+        style={{
+          minHeight: "100vh",
+        }}
       >
-        <img
-          src="https://cyberlearn.vn/wp-content/uploads/2020/03/cyberlearn-min-new-opt2.png"
-          alt="haha"
-        />
-        <Menu
-          theme="dark"
-          defaultSelectedKeys={["1"]}
-          mode="inline"
-          items={items}
-        />
-      </Sider>
-      <Layout className="site-layout">
-        <Content
-          style={{
-            margin: "0 16px",
-          }}
+        <Sider
+          collapsible
+          collapsed={collapsed}
+          onCollapse={(value) => setCollapsed(value)}
         >
-          <div
+          <img
+            src="https://cyberlearn.vn/wp-content/uploads/2020/03/cyberlearn-min-new-opt2.png"
+            alt="haha"
+          />
+          <Menu
+            theme="dark"
+            defaultSelectedKeys={["1"]}
+            mode="inline"
+            items={items}
+          />
+        </Sider>
+        <Layout className="site-layout">
+          <Content
             style={{
-              padding: 24,
-              minHeight: 360,
-              background: colorBgContainer,
+              margin: "0 16px",
             }}
           >
-            <Outlet />
-          </div>
-        </Content>
-        <Footer
-          style={{
-            textAlign: "center",
-          }}
-        >
-          Ant Design ©2023 Created by Ant UED
-        </Footer>
+            <div
+              style={{
+                padding: 24,
+                minHeight: 360,
+                background: colorBgContainer,
+              }}
+            >
+              <Outlet />
+            </div>
+          </Content>
+          <Footer
+            style={{
+              textAlign: "center",
+            }}
+          >
+            Ant Design ©2023 Created by Ant UED
+          </Footer>
+        </Layout>
       </Layout>
-    </Layout>
+    )
   );
 }

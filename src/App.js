@@ -24,19 +24,19 @@ import AddFilm from "pages/Admin/Films/Edit/AddFilm";
 
 import Dashboard from "pages/Admin/Dashboard/DashbashUser";
 import AddUser from "pages/Admin/Dashboard/AddUser";
+import UpdateUser from "pages/Admin/Dashboard/UpdateUser";
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     // dispatch async action fetch profile
     dispatch(layThongTinNguoiDungAction);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="*" element={<Navigate to="" />} />
+        {/* <Route path="*" element={<Navigate to="" />} /> */}
         <Route path="" element={<HomeTemplate />}>
           <Route index path="" element={<Home />} />
           <Route path="contact" element={<Contact />} />
@@ -55,6 +55,7 @@ function App() {
         <Route path="admin" element={<AdminTemplate />}>
           <Route index path="" element={<Dashboard />} />
           <Route path="addUser" element={<AddUser />} />
+          <Route path="updateUser/:taikhoan" element={<UpdateUser />} />
 
           <Route path="films" element={<Films />} />
           <Route path="films/addfilm" element={<AddFilm />} />

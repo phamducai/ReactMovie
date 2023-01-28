@@ -9,3 +9,6 @@
   margin-right: 8px;
   border-radius: 4px;
 }
+.custom-width {
+  width: 100px; /* or whatever width you want */
+}

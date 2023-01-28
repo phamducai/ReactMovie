@@ -1,15 +1,26 @@
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Button, Table, Input } from "antd";
 
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
+import {
+  LayDanhSachKhachHang,
+  TimKiemNguoiDungAction,
+  xoaNguoidungAction,
+} from "redux/actions/QuanLyNguoiDungAction";
 const { Search } = Input;
 
 function Dashboard() {
   const { danhsachkhachhang } = useSelector(
     (state) => state.QuanLyNguoiDungReducer
   );
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(LayDanhSachKhachHang());
+    dispatch({ type: "DELETE" });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const email = danhsachkhachhang.email;
   console.log(email);
@@ -73,13 +84,13 @@ function Dashboard() {
 
       fixed: "right",
       width: 100,
-      render: (text) => {
+      render: (text, user) => {
         return (
           <>
             <NavLink
               key="10"
               className=" mr-2  text-2xl"
-              // to={`/admin/films/edit/${film.maPhim}`}
+              to={`/admin/updateUser/${user.taiKhoan}`}
             >
               <EditOutlined style={{ color: "blue" }} />{" "}
             </NavLink>
@@ -87,13 +98,13 @@ function Dashboard() {
               style={{ cursor: "pointer" }}
               key="9"
               className="text-2xl"
-              // onClick={() => {
-              //   if (
-              //     window.confirm("Bạn có chắc muốn xoá phim " + film.tenPhim)
-              //   ) {
-              //     dispatch(xoaPhimAction(film.maPhim));
-              //   }
-              // }}
+              onClick={() => {
+                if (
+                  window.confirm("Bạn có chắc muốn xoá phim " + user.taiKhoan)
+                ) {
+                  dispatch(xoaNguoidungAction(user.taiKhoan));
+                }
+              }}
             >
               <DeleteOutlined style={{ color: "red" }} />{" "}
             </span>
@@ -102,9 +113,16 @@ function Dashboard() {
       },
     },
   ];
-  const data = danhsachkhachhang;
+  const data = Array.isArray(danhsachkhachhang)
+    ? danhsachkhachhang
+    : [danhsachkhachhang];
+
   const onChange = (pagination, filters, sorter, extra) => {
     console.log("params", pagination, filters, sorter, extra);
+  };
+
+  const onsearch = async (e) => {
+    await dispatch(LayDanhSachKhachHang(e.target.value));
   };
   return (
     <div>
@@ -116,7 +134,7 @@ function Dashboard() {
         placeholder="tìm kiếm người dùng"
         enterButton="Search"
         size="large"
-        // onChange={onsearch}
+        onChange={onsearch}
         name="search"
       />
       <Table

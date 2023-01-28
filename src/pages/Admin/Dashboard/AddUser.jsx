@@ -1,16 +1,8 @@
 import React from "react";
-import {
-  AutoComplete,
-  Button,
-  Checkbox,
-  Col,
-  Form,
-  Input,
-  InputNumber,
-  Row,
-  Select,
-} from "antd";
-import { useState } from "react";
+import { Button, Checkbox, Form, Input, Select } from "antd";
+import { useDispatch } from "react-redux";
+import { ThemNguoiDungAction } from "redux/actions/QuanLyNguoiDungAction";
+import { useNavigate } from "react-router-dom";
 const { Option } = Select;
 
 const formItemLayout = {
@@ -44,9 +36,26 @@ const tailFormItemLayout = {
   },
 };
 function AddUser() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [form] = Form.useForm();
-  const onFinish = (values) => {
-    console.log("Received values of form: ", values);
+  const onFinish = async (values) => {
+    const data = {
+      taiKhoan: values.UserName,
+      email: values.email,
+      soDt: "+" + values.prefix + values.phone,
+      maNhom: "GP01",
+      hoTen: values.FullName,
+      matKhau: values.password,
+      maLoaiNguoiDung: values.typeUser,
+    };
+    try {
+      await dispatch(ThemNguoiDungAction(data));
+      alert("Add User Suceessfully");
+      navigate("/admin");
+    } catch (error) {
+      alert("User Name or Email exist,please try again");
+    }
   };
   const prefixSelector = (
     <Form.Item name="prefix" noStyle>
@@ -77,6 +86,36 @@ function AddUser() {
         }}
         scrollToFirstError
       >
+        {/* user Name */}
+        <Form.Item
+          name="UserName"
+          label="UserName"
+          // tooltip="What do you want others to call you?"
+          rules={[
+            {
+              required: true,
+              message: "Please input your UserName!",
+              whitespace: true,
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        {/* Full Name */}
+        <Form.Item
+          name="FullName"
+          label="Full Name"
+          // tooltip="What do you want others to call you?"
+          rules={[
+            {
+              required: true,
+              message: "Please input your Full Name!",
+              whitespace: true,
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
         {/* email */}
         <Form.Item
           name="email"
@@ -133,21 +172,7 @@ function AddUser() {
         >
           <Input.Password />
         </Form.Item>
-        {/* user Name */}
-        <Form.Item
-          name="User Name"
-          label="UserName"
-          // tooltip="What do you want others to call you?"
-          rules={[
-            {
-              required: true,
-              message: "Please input your UserName!",
-              whitespace: true,
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
+
         {/* phone Number */}
         <Form.Item
           name="phone"
@@ -180,7 +205,7 @@ function AddUser() {
         >
           <Select placeholder="select type user">
             <Option value="QuanTri">Admin</Option>
-            <Option value="Khach Hang">Customer</Option>
+            <Option value="KhachHang">Customer</Option>
           </Select>
         </Form.Item>
         <Form.Item
@@ -217,6 +242,7 @@ function AddUser() {
             I have read the <a href="">agreement</a>
           </Checkbox>
         </Form.Item>
+
         <Form.Item {...tailFormItemLayout}>
           <Button type="primary" htmlType="submit">
             Register

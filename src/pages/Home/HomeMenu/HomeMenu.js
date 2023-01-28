@@ -18,24 +18,22 @@ function HomeMenu(props) {
           children: (
             <Tabs
               tabPosition="left"
+              className="custom-width"
               items={heThongRap.lstCumRap?.slice(0, 6).map((cumRap) => {
                 return {
                   label: (
-                    <div
-                      key={cumRap.maCumRap + "10"}
-                      className="lg:w-3/5 md:w-40"
-                    >
-                      <div className="text-left">
+                    <div key={cumRap.maCumRap + "10"} className="w-3/5">
+                      <div className="text-left w-3/5">
                         {cumRap?.tenCumRap.substr(0, 30)}
                       </div>
-                      <div className="text-left">
+                      <div className="text-left w-3/5">
                         <p>{cumRap?.diaChi.split(" ", 15)}</p>
                       </div>
                     </div>
                   ),
                   key: cumRap.maCumRap,
                   children: (
-                    <div>
+                    <>
                       {cumRap?.danhSachPhim.slice(0, 4).map((item) => {
                         return (
                           <div key={item.maPhim}>
@@ -88,7 +86,7 @@ function HomeMenu(props) {
                           </div>
                         );
                       })}
-                    </div>
+                    </>
                   ),
                 };
               })}
