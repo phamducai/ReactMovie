@@ -38,10 +38,6 @@ export default function AdminTemplate() {
     dispatch(layThongTinNguoiDungAction);
   }, []);
   const [collapsed, setCollapsed] = useState(false);
-  if (userLogin?.maLoaiNguoiDung !== "QuanTri") {
-    alert("Bạn không có quyền truy cập vào trang này !");
-    return <Navigate to="/" replace={true} />;
-  }
 
   // setTimeout(myGreeting, 2000);
   // function myGreeting() {
@@ -57,53 +53,51 @@ export default function AdminTemplate() {
   } = theme.useToken();
 
   return (
-    userLogin?.maLoaiNguoiDung && (
-      <Layout
-        style={{
-          minHeight: "100vh",
-        }}
+    <Layout
+      style={{
+        minHeight: "100vh",
+      }}
+    >
+      <Sider
+        collapsible
+        collapsed={collapsed}
+        onCollapse={(value) => setCollapsed(value)}
       >
-        <Sider
-          collapsible
-          collapsed={collapsed}
-          onCollapse={(value) => setCollapsed(value)}
+        <img
+          src="https://cyberlearn.vn/wp-content/uploads/2020/03/cyberlearn-min-new-opt2.png"
+          alt="haha"
+        />
+        <Menu
+          theme="dark"
+          defaultSelectedKeys={["1"]}
+          mode="inline"
+          items={items}
+        />
+      </Sider>
+      <Layout className="site-layout">
+        <Content
+          style={{
+            margin: "0 16px",
+          }}
         >
-          <img
-            src="https://cyberlearn.vn/wp-content/uploads/2020/03/cyberlearn-min-new-opt2.png"
-            alt="haha"
-          />
-          <Menu
-            theme="dark"
-            defaultSelectedKeys={["1"]}
-            mode="inline"
-            items={items}
-          />
-        </Sider>
-        <Layout className="site-layout">
-          <Content
+          <div
             style={{
-              margin: "0 16px",
+              padding: 24,
+              minHeight: 360,
+              background: colorBgContainer,
             }}
           >
-            <div
-              style={{
-                padding: 24,
-                minHeight: 360,
-                background: colorBgContainer,
-              }}
-            >
-              <Outlet />
-            </div>
-          </Content>
-          <Footer
-            style={{
-              textAlign: "center",
-            }}
-          >
-            Ant Design ©2023 Created by Ant UED
-          </Footer>
-        </Layout>
+            <Outlet />
+          </div>
+        </Content>
+        <Footer
+          style={{
+            textAlign: "center",
+          }}
+        >
+          Ant Design ©2023 Created by Ant UED
+        </Footer>
       </Layout>
-    )
+    </Layout>
   );
 }

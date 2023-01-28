@@ -1,9 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
-import { Dropdown, Select, Space } from "antd";
+import { Dropdown, message, Select, Space } from "antd";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { Link, NavLink, useNavigate } from "react-router-dom";
+import { UserOutlined } from "@ant-design/icons";
+import { useState } from "react";
 
 export default function Header() {
   let profile = useSelector(
@@ -32,14 +34,10 @@ export default function Header() {
     },
     {
       key: "2",
-      label: (
-        <NavLink
-          className="no-underline  text-white  text-sm px-4 transition-all font-medium leading-tight"
-          href="£"
-        >
-          {t("Cluster of Theaters")}
-        </NavLink>
-      ),
+      label:
+        profile?.maNguoiDung === "QuanTri" ? (
+          <NavLink to={"/admin"}>Admin</NavLink>
+        ) : null,
     },
     {
       key: "3",
@@ -105,6 +103,28 @@ export default function Header() {
     },
   ];
 
+  const tem = [
+    {
+      label: (
+        <NavLink to={`/profile/${profile?.taiKhoan}`}> Update User </NavLink>
+      ),
+      key: "100",
+      icon: <UserOutlined />,
+    },
+    {
+      label:
+        profile?.maLoaiNguoiDung === "QuanTri" ? (
+          <NavLink to={"/admin"}>Admin</NavLink>
+        ) : (
+          <NavLink to={"/"}>Home</NavLink>
+        ),
+      key: "200",
+      icon: <UserOutlined />,
+    },
+  ];
+  const menuProps = {
+    items: tem,
+  };
   return (
     <header className="bg-colorHeader h-18 bg-opacity-40 text-white fixed z-10 w-full bg-black">
       <div className="container  h-full  mx-auto flex justify-between items-center">
@@ -145,13 +165,15 @@ export default function Header() {
         <div className="hidden md:flex ">
           {profile ? (
             <div className="flex items-center ml-60">
-              <NavLink
-                to={`/profile/${profile?.taiKhoan}`}
-                className="no-underline  text-white   text-sm px-4 transition-all font-medium leading-tight"
+              <Dropdown.Button
+                menu={menuProps}
+                placement="bottom"
+                icon={<UserOutlined />}
               >
                 {profile.taiKhoan.charAt(0).toUpperCase() +
                   profile.taiKhoan.slice(1)}
-              </NavLink>
+              </Dropdown.Button>
+
               <NavLink
                 onClick={() => {
                   localStorage.removeItem("token");
