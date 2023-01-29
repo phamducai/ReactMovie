@@ -57,7 +57,7 @@ export default function Film_Flip(props) {
       </div>
       <NavLink to={`/detail/${item.maPhim}`} className="no-underline">
         <div className="bg-orange-300 text-center cursor-pointer py-2 text-success-50 font-bold">
-          {t("Buy Now")}
+          {t("Đặt Vé")}
         </div>
       </NavLink>
     </div>
