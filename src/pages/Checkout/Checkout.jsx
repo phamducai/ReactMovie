@@ -206,7 +206,7 @@ function KetQuaDatVe(props) {
     (state) => state.QuanLyNguoiDungReducer?.thongTinNguoiDung
   );
   const arr = [...thongTinNguoiDung.thongTinDatVe];
-  const map = arr.reverse();
+  const map = arr;
   console.log(map);
   return (
     <section className="text-gray-600 body-font">
@@ -241,7 +241,7 @@ function KetQuaDatVe(props) {
                       <span className="font-bold">Tên rạp:</span>{" "}
                       {ticket.danhSachGhe[0].tenCumRap} -{" "}
                       <span className="font-bold">Ghế:</span>{" "}
-                      {ticket.danhSachGhe.slice(0, 1).map((ghe, index) => {
+                      {ticket.danhSachGhe.slice(0, 10).map((ghe, index) => {
                         return (
                           <span className="text-green-500 text-xl" key={index}>
                             {ghe.tenGhe}

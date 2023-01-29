@@ -1,14 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Button, DatePicker, Form, InputNumber, Select } from "antd";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useState } from "react";
 
 import { quanLyRapService } from "services/QuanLyRapService";
 import { useParams } from "react-router-dom";
-import moment from "moment";
+import dayjs from "dayjs";
 import { quanLyDatVeService } from "services/QuanLyDatVeService";
 
 const ShowTime = (props) => {
+  const [ngayKhoiChieu, setNgayKhoiChieu] = useState(0);
   console.log(props);
   const { id, tenphim } = useParams();
   console.log(id, tenphim);
@@ -30,10 +31,12 @@ const ShowTime = (props) => {
     fetchData();
   }, []);
 
-  const [ngayKhoiChieu, setNgayKhoiChieu] = useState(0);
   const onChange = (date, dateString) => {
+    console.log(dateString);
     setNgayKhoiChieu(dateString);
   };
+
+  console.log(ngayKhoiChieu);
 
   const handleChangeHeThongRap = async (value) => {
     try {
@@ -48,18 +51,21 @@ const ShowTime = (props) => {
     }
   };
   const onFinish = async (value) => {
+    let day = dayjs(value.ngaychieu).format("DD/MM/YYYY hh:mm:ss");
+    console.log(day);
     const data = {
       maPhim: +id,
-      ngayChieuGioChieu: ngayKhoiChieu,
+      ngayChieuGioChieu: day,
       maRap: value.cumrap,
       giaVe: +value.giave,
     };
+
     console.log(data);
     try {
       const result = await quanLyDatVeService.taoLichChieu(data);
-
       alert(result.data.content);
     } catch (error) {
+      alert("Thêm Lịch Chiếu Thất Bại");
       console.log("error", error.response?.data);
     }
   };
@@ -109,8 +115,8 @@ const ShowTime = (props) => {
           <DatePicker
             required
             showTime
-            onChange={onChange}
             onOk={onChange}
+            onChange={onChange}
             format="DD/MM/YYYY hh:mm:ss"
           />
         </Form.Item>
@@ -118,7 +124,9 @@ const ShowTime = (props) => {
           <InputNumber min={75000} required />
         </Form.Item>
         <Form.Item label="Button">
-          <Button htmlType="submit">Submit</Button>
+          <Button htmlType="submit" type="primary">
+            Submit
+          </Button>
         </Form.Item>
       </Form>
     </div>

@@ -2,6 +2,7 @@ import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
   layThongTinNguoiDungAction,
   updateUserAction,
@@ -13,6 +14,7 @@ const Profile = () => {
     (state) => state.QuanLyNguoiDungReducer.thongTinNguoiDung
   );
 
+  const navigate = useNavigate();
   const email = profile?.email;
   // To disable submit button at the beginning.
   const dispatch = useDispatch();
@@ -31,9 +33,14 @@ const Profile = () => {
       maLoaiNguoiDung: "KhachHang",
       email: values.Email,
     };
-    console.log(data);
 
-    dispatch(updateUserAction(data));
+    try {
+      dispatch(updateUserAction(data));
+      alert("UpDate User Success");
+      navigate("/");
+      dispatch(layThongTinNguoiDungAction);
+      window.location.reload();
+    } catch (error) {}
   };
   return (
     email && (
@@ -71,6 +78,7 @@ const Profile = () => {
           ]}
         >
           <Input
+            disabled={true}
             prefix={<UserOutlined className="site-form-item-icon" />}
             placeholder="Username"
           />
