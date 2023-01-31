@@ -1,20 +1,24 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { layThongTinNguoiDungAction } from "redux/actions/QuanLyNguoiDungAction";
-import { Dropdown, Select, Space } from "antd";
+import { Button, Dropdown, Select, Space, Tag } from "antd";
 import { useTranslation } from "react-i18next";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
+import { EditOutlined } from "@ant-design/icons";
+import Input from "antd/es/input/Input";
+import { updateProfileAction } from "../../redux/actions/QuanLyNguoiDungAction";
+import moment from "moment/moment";
 
 function Header() {
   let profile = useSelector(
-    (state) => state.QuanLyNguoiDungReducer.thongTinNguoiDung
+    (state) => state.QuanLyNguoiDungReducer.thongTinTaiKhoan
   );
+
   const { t, i18n } = useTranslation();
   const handleChange = (value) => {
-    console.log(value);
     i18n.changeLanguage(value);
   };
 
@@ -229,24 +233,52 @@ function Header() {
 export default function Profile() {
   const [data, setData] = useState([]);
   const dispatch = useDispatch();
+  const [passwordVisible, setPasswordVisible] = React.useState(false);
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     setData([...data]);
+  //   }, 1000);
+  //   return () => clearInterval(intervalId);
+  // }, [data]);
 
-  const { thongTinNguoiDung } = useSelector(
+  const { thongTinTaiKhoan } = useSelector(
     (state) => state.QuanLyNguoiDungReducer
   );
 
-  console.log(thongTinNguoiDung);
+  const [dataSubmit, setDataSubmit] = useState({
+    dataSubmit: {
+      taiKhoan: "",
+      matKhau: "",
+      email: "",
+      soDt: "",
+      maNhom: "",
+      maLoaiNguoiDung: "",
+      hoTen: "",
+    },
+  });
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      setData([...data]);
-    }, 1000);
-    return () => clearInterval(intervalId);
-  }, [data]);
+    setDataSubmit(thongTinTaiKhoan);
+    // Đã load email
+  }, [thongTinTaiKhoan]);
+
+  console.log(dataSubmit);
+
+  const handleChange = (e) => {
+    console.log(e.target.name, e.target.value);
+    setDataSubmit({ ...dataSubmit, [e.target.name]: e.target.value });
+  };
+
+  const onFinish = (e) => {
+    e.preventDefault();
+    console.log(dataSubmit);
+    // dispatch(updateProfileAction(dataSubmit));
+  };
 
   return (
     <div>
       <Header></Header>
-      <div className="container mx-auto my-5 px-5  ">
+      <div className=" w-10/12 mx-auto my-5 px-5 ">
         <div className="md:flex no-wrap md:-mx-2 ">
           {/* Left Side */}
           <div className="w-full md:w-3/12 md:mx-2">
@@ -255,16 +287,16 @@ export default function Profile() {
               <div className="image overflow-hidden">
                 <img
                   className="h-auto w-full mx-auto"
-                  src="https://static.vecteezy.com/system/resources/thumbnails/002/275/847/small/male-avatar-profile-icon-of-smiling-caucasian-man-vector.jpg"
+                  src="https://picsum.photos/200/300"
                   alt
                 />
               </div>
               <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">
-                {thongTinNguoiDung?.hoTen}
+                {thongTinTaiKhoan?.hoTen}
               </h1>
-              <h3 className="text-gray-600 font-lg text-semibold leading-6">
-                Loại Người Dùng: {thongTinNguoiDung?.loaiNguoiDung.tenLoai}
-              </h3>
+              <h1 className="text-gray-600 font-bold text-semibold leading-6">
+                Loại Người Dùng: {thongTinTaiKhoan?.loaiNguoiDung?.tenLoai}
+              </h1>
               <ul className="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
                 <li className="flex items-center py-3">
                   <span>Trạng Thái</span>
@@ -307,167 +339,148 @@ export default function Profile() {
                     />
                   </svg>
                 </span>
-                <span className="tracking-wide">About</span>
+                <span className="tracking-wide">Thông tin tài khoản</span>
               </div>
-              <div className="text-gray-700">
+              <form onSubmit={onFinish} className="text-gray-700">
                 <div className="grid md:grid-cols-2 text-sm">
                   <div className="grid grid-cols-2">
-                    <div className="px-4 py-2 font-semibold">First Name</div>
-                    <div className="px-4 py-2">Jane</div>
-                  </div>
-                  <div className="grid grid-cols-2">
-                    <div className="px-4 py-2 font-semibold">Last Name</div>
-                    <div className="px-4 py-2">Doe</div>
-                  </div>
-                  <div className="grid grid-cols-2">
-                    <div className="px-4 py-2 font-semibold">Gender</div>
-                    <div className="px-4 py-2">Female</div>
-                  </div>
-                  <div className="grid grid-cols-2">
-                    <div className="px-4 py-2 font-semibold">Contact No.</div>
-                    <div className="px-4 py-2">+11 998001001</div>
-                  </div>
-                  <div className="grid grid-cols-2">
-                    <div className="px-4 py-2 font-semibold">
-                      Current Address
-                    </div>
+                    <div className="px-4 py-2 font-semibold">Email</div>
                     <div className="px-4 py-2">
-                      Beech Creek, PA, Pennsylvania
+                      <Input
+                        value={dataSubmit.email}
+                        onChange={handleChange}
+                        name={"email"}
+                      />
                     </div>
+                    {/* <div
+                      onClick={() => {
+                        console.log("Đã Click");
+                      }}
+                      className="px-4 py-2"
+                    >
+                      <EditOutlined /> Chỉnh Sửa
+                    </div> */}
                   </div>
                   <div className="grid grid-cols-2">
-                    <div className="px-4 py-2 font-semibold">
-                      Permanant Address
-                    </div>
+                    <div className="px-4 py-2 font-semibold">Tài Khoản</div>
                     <div className="px-4 py-2">
-                      Arlington Heights, IL, Illinois
+                      <Input
+                        value={dataSubmit.taiKhoan}
+                        onChange={handleChange}
+                        name={"taiKhoan"}
+                        disabled={true}
+                      />
                     </div>
                   </div>
                   <div className="grid grid-cols-2">
-                    <div className="px-4 py-2 font-semibold">Email.</div>
+                    <div className="px-4 py-2 font-semibold">Số điện thoại</div>
                     <div className="px-4 py-2">
-                      <a
-                        className="text-blue-800"
-                        href="mailto:jane@example.com"
-                      >
-                        jane@example.com
-                      </a>
+                      <Input
+                        value={dataSubmit.soDT}
+                        onChange={handleChange}
+                        name={"soDT"}
+                      />
                     </div>
                   </div>
                   <div className="grid grid-cols-2">
-                    <div className="px-4 py-2 font-semibold">Birthday</div>
-                    <div className="px-4 py-2">Feb 06, 1998</div>
+                    <div className="px-4 py-2 font-semibold">Mật Khẩu</div>
+                    <div className="px-4 py-2">
+                      <Input.Password
+                        name="matKhau"
+                        value={dataSubmit.matKhau}
+                        onChange={handleChange}
+                        placeholder="input password"
+                        visibilityToggle={{
+                          visible: passwordVisible,
+                          onVisibleChange: setPasswordVisible,
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2">
+                    <div className="px-4 py-2 font-semibold">Họ Và Tên</div>
+                    <div className="px-4 py-2">
+                      <Input
+                        value={dataSubmit.hoTen}
+                        onChange={handleChange}
+                        name={"hoTen"}
+                      />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2">
+                    <div className="px-4 py-2 font-semibold"> </div>
+                    <div className="px-4 py-2">
+                      <Button htmlType="submit">Cập Nhật</Button>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <button className="block w-full text-blue-800 text-sm font-semibold rounded-lg hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:bg-gray-100 hover:shadow-xs p-3 my-4">
+              </form>
+              {/* <button className="block w-full text-blue-800 text-sm font-semibold rounded-lg hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:bg-gray-100 hover:shadow-xs p-3 my-4">
                 Show Full Information
-              </button>
+              </button> */}
             </div>
             {/* End of about section */}
             <div className="my-4" />
             {/* Experience and education */}
             <div className="bg-white p-3 shadow-sm rounded-sm">
-              <div className="grid grid-cols-2">
-                <div>
-                  <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
-                    <span clas="text-green-500">
-                      <svg
-                        className="h-5"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                        />
-                      </svg>
-                    </span>
-                    <span className="tracking-wide">Experience</span>
-                  </div>
-                  <ul className="list-inside space-y-2">
-                    <li>
-                      <div className="text-teal-600">
-                        Owner at Her Company Inc.
+              <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
+                <span clas="text-green-500">
+                  <svg
+                    className="h-5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                    />
+                  </svg>
+                </span>
+                <span className="tracking-wide">Lịch sử đặt vé</span>
+              </div>
+              <div
+                className="grid grid-cols-2"
+                style={{ overflowY: "scroll", height: "480px" }}
+              >
+                {thongTinTaiKhoan.thongTinDatVe?.map((phim) => {
+                  return (
+                    <div className="flex mb-5  ">
+                      <img
+                        src={phim.hinhAnh}
+                        alt=""
+                        style={{ width: "150px" }}
+                      />
+                      <div className="ml-5">
+                        <h1 className="text-teal-600 text-2xl">
+                          {phim.tenPhim} {phim.thoiLuongPhim} phút
+                        </h1>
+                        <p
+                          className="text-gray-900"
+                          style={{ fontSize: "15px" }}
+                        >
+                          Ngày Chiếu:
+                          {moment(phim.ngayDat).format("DD/MM/YYYY")} - Giờ
+                          Chiếu: {moment(phim.ngayDat).format("hh:mm:ss")}
+                        </p>
+                        <h3>
+                          Danh sách ghế : <br />
+                          {phim.danhSachGhe?.slice(0, 4).map((ghe) => {
+                            return (
+                              <Tag color="geekblue">
+                                Rap: {ghe.tenHeThongRap} - Cụm Rap:{" "}
+                                {ghe.maCumRap} - số Ghế: {ghe.tenGhe}
+                              </Tag>
+                            );
+                          })}
+                        </h3>
                       </div>
-                      <div className="text-gray-500 text-xs">
-                        March 2020 - Now
-                      </div>
-                    </li>
-                    <li>
-                      <div className="text-teal-600">
-                        Owner at Her Company Inc.
-                      </div>
-                      <div className="text-gray-500 text-xs">
-                        March 2020 - Now
-                      </div>
-                    </li>
-                    <li>
-                      <div className="text-teal-600">
-                        Owner at Her Company Inc.
-                      </div>
-                      <div className="text-gray-500 text-xs">
-                        March 2020 - Now
-                      </div>
-                    </li>
-                    <li>
-                      <div className="text-teal-600">
-                        Owner at Her Company Inc.
-                      </div>
-                      <div className="text-gray-500 text-xs">
-                        March 2020 - Now
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-                <div>
-                  <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
-                    <span clas="text-green-500">
-                      <svg
-                        className="h-5"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path fill="#fff" d="M12 14l9-5-9-5-9 5 9 5z" />
-                        <path
-                          fill="#fff"
-                          d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"
-                        />
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"
-                        />
-                      </svg>
-                    </span>
-                    <span className="tracking-wide">Education</span>
-                  </div>
-                  <ul className="list-inside space-y-2">
-                    <li>
-                      <div className="text-teal-600">
-                        Masters Degree in Oxford
-                      </div>
-                      <div className="text-gray-500 text-xs">
-                        March 2020 - Now
-                      </div>
-                    </li>
-                    <li>
-                      <div className="text-teal-600">
-                        Bachelors Degreen in LPU
-                      </div>
-                      <div className="text-gray-500 text-xs">
-                        March 2020 - Now
-                      </div>
-                    </li>
-                  </ul>
-                </div>
+                    </div>
+                  );
+                })}
               </div>
               {/* End of Experience and education grid */}
             </div>
