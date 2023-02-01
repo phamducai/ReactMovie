@@ -47,6 +47,7 @@ function App() {
         <Route path="test" element={<Test />} />
 
         <Route path="checkout/:maLichChieu" element={<Checkout />} />
+
         <Route path="users" element={<UserTemplate />}>
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<Register />} />
