@@ -28,7 +28,7 @@ const Profile = () => {
       taiKhoan: values.username,
       soDT: values.phone,
       matKhau: values.password,
-      maNhom: "GP00",
+      maNhom: "GP03",
       hoTen: values.fullName,
       maLoaiNguoiDung: "KhachHang",
       email: values.Email,
