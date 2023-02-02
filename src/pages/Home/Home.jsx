@@ -26,11 +26,11 @@ export default function Home(props) {
         </div>
       </section>
       <section className="text-gray-600 body-font">
-        <div className="container lg:px-5 lg:py-20  mx-5 ">
+        <div className="container mx-auto lg:px-5 lg:py-20 ">
           <MultipleRowSlick arrFilm={arrFilm} />
         </div>
       </section>
-      <div className="lg:mx-36 hidden md:block mx-2">
+      <div className="container md:block hidden">
         <HomeMenu heThongRapChieu={heThongRapChieu} />
       </div>
       <div>
