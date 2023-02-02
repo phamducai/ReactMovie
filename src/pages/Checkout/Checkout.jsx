@@ -57,14 +57,15 @@ function Checkout(props) {
                     key={item.maGhe}
                     className={clsx(
                       "ghe text-center",
-                      { gheVip: item.loaiGhe === "Vip" },
                       {
-                        gheDaDuocDat:
-                          danhSachGheDangDat.find(
-                            (ele) => ele.maGhe === item.maGhe
-                          ) && item.loaiGhe === "Thuong",
-                        gheDaDat: item.daDat === true,
-                      }
+                        gheVip: item.loaiGhe === "Vip",
+                      },
+                      {
+                        gheDaDuocDat: danhSachGheDangDat.find(
+                          (ele) => ele.maGhe === item.maGhe
+                        ),
+                      },
+                      { gheDaDat: item.daDat === true }
                     )}
                     onClick={() => {
                       dispatch(datGheAction(item, maLichChieu));
