@@ -15,7 +15,7 @@
 }
 
 .gheDaDat {
-  background-color: rgb(232, 76, 76);
+  background-color: rgb(232, 76, 76) !important;
   cursor: no-drop;
 }
 
