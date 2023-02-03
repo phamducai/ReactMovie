@@ -200,14 +200,14 @@ export default function Header() {
             </nav>
           )}
           <Select
-            defaultValue={t("lang")}
+            defaultValue={"en"}
             style={{ width: 70 }}
             onChange={handleChange}
             className="lg:ml-2 ml-1"
           >
-            <Select.Option value={t("lang")} name="opion">
+            {/* <Select.Option value={t("lang")} name="opion">
               {t("lang")}
-            </Select.Option>
+            </Select.Option> */}
             <Select.Option value="en" name="en">
               Eng
             </Select.Option>

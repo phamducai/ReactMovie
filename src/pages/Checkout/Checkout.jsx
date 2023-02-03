@@ -63,8 +63,8 @@ function Checkout(props) {
                           danhSachGheDangDat.find(
                             (ele) => ele.maGhe === item.maGhe
                           ) && item.loaiGhe === "Thuong",
-                        gheDaDat: item.daDat === true,
-                      }
+                      },
+                      { gheDaDat: item.daDat === true }
                     )}
                     onClick={() => {
                       dispatch(datGheAction(item, maLichChieu));

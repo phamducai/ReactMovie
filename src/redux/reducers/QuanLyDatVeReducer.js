@@ -32,6 +32,7 @@ export const QuanLyDatVeReducer = (state = inititalState, action) => {
           }
         }
         break;
+
       case CHUYEN_TAB: {
         draft.tabActive = "2";
         break;
@@ -46,6 +47,7 @@ export const QuanLyDatVeReducer = (state = inititalState, action) => {
         draft.danhSachGheDangDat = [];
         break;
       }
+
       default:
         break;
     }
