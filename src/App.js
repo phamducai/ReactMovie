@@ -53,6 +53,7 @@ function App() {
           <Route path="signup" element={<Register />} />
         </Route>
         <Route path="profile/:taikhoan" element={<Profile />} />
+
         <Route path="admin" element={<AdminTemplate />}>
           <Route index path="" element={<Dashboard />} />
           <Route path="addUser" element={<AddUser />} />
