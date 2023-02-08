@@ -1,22 +1,31 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from "react";
-import { Dropdown, message, Select, Space } from "antd";
+import React, { useState } from "react";
+import { Dropdown, Select, Space } from "antd";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { UserOutlined } from "@ant-design/icons";
-import { useState } from "react";
+import { Link, scroller } from "react-scroll";
 
 export default function Header() {
   let profile = useSelector(
     (state) => state.QuanLyNguoiDungReducer.thongTinNguoiDung
   );
-  console.log(profile);
-
+  // eslint-disable-next-line no-unused-vars
+  const [selectedSection, setSelectedSection] = useState(null);
   const { t, i18n } = useTranslation();
   const handleChange = (value) => {
-    console.log(value);
     i18n.changeLanguage(value);
+  };
+
+  const handleClick = (section) => {
+    setSelectedSection(section);
+    scroller.scrollTo(section, {
+      duration: 1500,
+      delay: 100,
+      smooth: true,
+      offset: -70,
+    });
   };
 
   const navigate = useNavigate();
@@ -25,7 +34,7 @@ export default function Header() {
       key: "1",
       label: (
         <NavLink
-          to="/homemenu"
+          to="/"
           className="no-underline  text-white  text-sm px-4 transition-all font-medium leading-tight"
         >
           {t("Showtimes")}
@@ -125,6 +134,7 @@ export default function Header() {
   const menuProps = {
     items: tem,
   };
+
   return (
     <header className="bg-colorHeader h-18 bg-opacity-40 text-white fixed z-10 w-full bg-black">
       <div className="container  h-full  mx-auto flex justify-between items-center">
@@ -138,33 +148,34 @@ export default function Header() {
         </Link>
         <div className="hidden md:block">
           <NavLink
-            to={"/homemenu"}
+            onClick={() => handleClick("multipleslick")}
             className="no-underline  text-white  text-sm px-4 transition-all font-medium leading-tight"
           >
             {t("Showtimes")}
           </NavLink>
           <NavLink
             className="no-underline  text-white  text-sm px-4 transition-all font-medium leading-tight"
-            href="£"
+            onClick={() => handleClick("homemenu")}
           >
             {t("Cluster of Theaters")}
           </NavLink>
-          <NavLink
-            className="no-underline   text-white  text-sm px-4 transition-all font-medium leading-tight"
-            href="£"
-          >
-            {t("News")}
-          </NavLink>
+
           <NavLink
             className="no-underline  text-white   text-sm px-4 transition-all font-medium leading-tight"
-            href="£"
+            onClick={() => handleClick("footer")}
           >
             {t("Application")}
+          </NavLink>
+          <NavLink
+            className="no-underline   text-white  text-sm px-4 transition-all font-medium leading-tight"
+            to={"/admin"}
+          >
+            {t("admin")}
           </NavLink>
         </div>
         <div className="hidden md:flex ">
           {profile ? (
-            <div className="flex items-center ml-60">
+            <div className="flex items-center ml-48">
               <Dropdown.Button
                 menu={menuProps}
                 placement="bottom"
@@ -192,7 +203,7 @@ export default function Header() {
                   {t("Sign In")}
                 </div>
               </NavLink>
-              <NavLink to={"register"} className="no-underline lg:ml-6">
+              <NavLink to={"/register"} className="no-underline lg:ml-6">
                 <div className="flex flex-item justify-end  text-white no-underline ">
                   {t("Sign Up")}
                 </div>

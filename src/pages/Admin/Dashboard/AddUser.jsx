@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Checkbox, Form, Input, Select } from "antd";
 import { useDispatch } from "react-redux";
 import { ThemNguoiDungAction } from "redux/actions/QuanLyNguoiDungAction";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 const { Option } = Select;
 
 const formItemLayout = {
@@ -239,7 +239,7 @@ function AddUser() {
           {...tailFormItemLayout}
         >
           <Checkbox>
-            I have read the <a href="">agreement</a>
+            I have read the <NavLink to={"/"}>agreement</NavLink>
           </Checkbox>
         </Form.Item>
 

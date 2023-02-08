@@ -5,7 +5,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { layThongTinChiTietPhim } from "redux/actions/QuanLyRapActions";
 import moment from "moment";
-import Header from "templates/HomeTemplate/Layout/Header/Header";
+import Headers from "components/Header/Header";
 import { useTranslation } from "react-i18next";
 
 function DetailMovie(props) {
@@ -24,8 +24,8 @@ function DetailMovie(props) {
   const flagLogin = localStorage.getItem("token");
   return (
     <React.Fragment>
+      <Headers />
       <div style={{ backgroundColor: "rgb(10, 32, 41)" }}>
-        <Header />
         <div className=" absolute top-20 left-0 w-full">
           {" "}
           {filmDetail?.hinhAnh && (

@@ -46,7 +46,7 @@ function Register() {
       <div
         className="relative flex h-screen w-screen flex-col bg-black md:items-center md:justify-center md:bg-transparent"
         style={{
-          backgroundImage: `url("https://rb.gy/p2hphi")`,
+          backgroundImage: `url("http://demo1.cybersoft.edu.vn/static/media/backapp.b46ef3a1.jpg")`,
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
         }}

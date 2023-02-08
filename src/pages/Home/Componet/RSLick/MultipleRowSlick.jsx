@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { Pagination } from "antd";
 import { layDanhSachPhimAction } from "redux/actions/QuanLyPhimActions";
 
-import Film_Flip from "components/Film/Film_Flip";
+import Film_Flip from "../Film/Film_Flip";
 
 function MultipleRowSlick(props) {
   const dispatch = useDispatch();

@@ -52,7 +52,7 @@ function UpdateUser() {
   useEffect(() => {
     forceUpdate({});
     dispatch(TimKiemNguoiDungAction(taikhoan));
-  }, [taikhoan]);
+  }, [dispatch, taikhoan]);
 
   const onFinish = async (values) => {
     const data = {

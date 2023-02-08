@@ -18,7 +18,6 @@ import { ThongTinDatVe } from "_core/models/ThongTinDatVe";
 import { useTranslation } from "react-i18next";
 
 function Checkout(props) {
-  const { t } = useTranslation();
   const { maLichChieu } = useParams();
   const dispatch = useDispatch();
 

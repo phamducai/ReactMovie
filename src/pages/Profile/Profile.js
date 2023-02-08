@@ -21,6 +21,8 @@ const Profile = () => {
   useEffect(() => {
     dispatch(layThongTinNguoiDungAction);
     forceUpdate({});
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onFinish = (values) => {

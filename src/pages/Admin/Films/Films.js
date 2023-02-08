@@ -23,6 +23,7 @@ function Films() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(layDanhSachPhimActionAll());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const columns = [
     {
