@@ -21,6 +21,11 @@ function Register() {
       type: "error",
       content: "Error Regiter User",
     });
+  // const err = () => {
+  //   messageApi.open({
+  //     type: "error",
+  //     content: "Error Regiter User",
+  //   });
   };
 
   const onSubmit = async (value) => {
@@ -44,14 +49,14 @@ function Register() {
   return (
     <div>
       <div
-        className="relative flex h-screen w-screen flex-col bg-black md:items-center md:justify-center md:bg-transparent"
+        className="relative flex h-screen flex-col w-screen bg-black md:items-center md:justify-center md:bg-transparent"
         style={{
           backgroundImage: `url("http://demo1.cybersoft.edu.vn/static/media/backapp.b46ef3a1.jpg")`,
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
         }}
       >
-        <div className="w-full p-5">
+        <div className="p-5 w-full">
           {contextHolder}
           <div className="md:absolute top-1/2 left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 border rounded-lg shadow-lg bg-white px-10 py-5 w-4/5 sm:w-2/3 mx-auto">
             <form onSubmit={handleSubmit(onSubmit)}>

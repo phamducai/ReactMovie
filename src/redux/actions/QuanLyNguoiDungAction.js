@@ -114,7 +114,6 @@ export const capNhatThongTinNguoiDung = (data) => {
       const result = await quanLyNguoiDungService.CapNhatThongTinNguoiDung(
         data
       );
-
       if (result.data.statusCode === 200) {
         dispatch({
           type: DANH_SACH_KHACH_HANG,
@@ -127,6 +126,25 @@ export const capNhatThongTinNguoiDung = (data) => {
     }
   };
 };
+
+
+
+
+export const xoaNguoidungAction = (maPhim) => {
+  console.log(maPhim);
+  return async (dispatch) => {
+    try {
+      const result = await quanLyNguoiDungService.xoaUser(maPhim);
+      console.log("result", result.data.content);
+      alert("Xoá phim thành công !");
+      dispatch(LayDanhSachKhachHang());
+    } catch (errors) {
+      alert("Người dùng này đã đặt vé xem phim không thể xóa!");
+      console.log("errors", errors.response?.data);
+    }
+  };
+};
+
 
 export const TimKiemNguoiDungAction = (data = "") => {
   console.log(data);
@@ -141,21 +159,6 @@ export const TimKiemNguoiDungAction = (data = "") => {
       }
     } catch (error) {
       throw error;
-    }
-  };
-};
-
-export const xoaNguoidungAction = (maPhim) => {
-  console.log(maPhim);
-  return async (dispatch) => {
-    try {
-      const result = await quanLyNguoiDungService.xoaUser(maPhim);
-      console.log("result", result.data.content);
-      alert("Xoá phim thành công !");
-      dispatch(LayDanhSachKhachHang());
-    } catch (errors) {
-      alert("Người dùng này đã đặt vé xem phim không thể xóa!");
-      console.log("errors", errors.response?.data);
     }
   };
 };

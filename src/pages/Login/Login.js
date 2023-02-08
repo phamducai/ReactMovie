@@ -92,7 +92,7 @@ function Login() {
             <div className="mb-6">
               <label
                 htmlFor=""
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                className="block mb-2 font-medium text-sm text-gray-900 dark:text-gray-300"
               >
                 Mật Khẩu
               </label>
