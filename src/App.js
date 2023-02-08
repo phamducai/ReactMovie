@@ -14,9 +14,8 @@ import EditFilm from "pages/Admin/Films/Edit/Edit";
 import Films from "pages/Admin/Films/Films";
 import ShowTime from "pages/Admin/Showtime/ShowTime";
 
-import UserTemplate from "templates/UserTemplate/UserTemplate";
 import Register from "pages/Register/Register";
-import Test from "Test";
+
 import Contact from "pages/Contact/Contact";
 import News from "pages/News/News";
 import Home from "pages/Home/Home";
@@ -25,6 +24,7 @@ import AddFilm from "pages/Admin/Films/Edit/AddFilm";
 import Dashboard from "pages/Admin/Dashboard/DashbashUser";
 import AddUser from "pages/Admin/Dashboard/AddUser";
 import UpdateUser from "pages/Admin/Dashboard/UpdateUser";
+import MultipleRowSlick from "components/RSLick/MultipleRowSlick";
 
 function App() {
   const dispatch = useDispatch();
@@ -39,19 +39,17 @@ function App() {
         {/* <Route path="*" element={<Navigate to="" />} /> */}
         <Route path="" element={<HomeTemplate />}>
           <Route index path="" element={<Home />} />
-          <Route path="contact" element={<Contact />} />
+          <Route path="homemenu" element={<MultipleRowSlick />} />
+
           <Route path="news" element={<News />} />
           <Route path="detail/:id" element={<DetailMovie />} />
         </Route>
 
-        <Route path="test" element={<Test />} />
-
         <Route path="checkout/:maLichChieu" element={<Checkout />} />
 
-        <Route path="users" element={<UserTemplate />}>
-          <Route path="login" element={<Login />} />
-          <Route path="signup" element={<Register />} />
-        </Route>
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
+
         <Route path="profile/:taikhoan" element={<Profile />} />
 
         <Route path="admin" element={<AdminTemplate />}>

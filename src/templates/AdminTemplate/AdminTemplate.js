@@ -5,10 +5,7 @@ import { useState } from "react";
 import { Link, Navigate, Outlet } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  LayDanhSachKhachHang,
-  layThongTinNguoiDungAction,
-} from "redux/actions/QuanLyNguoiDungAction";
+import { layThongTinNguoiDungAction } from "redux/actions/QuanLyNguoiDungAction";
 const { Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
   return {
@@ -34,19 +31,9 @@ export default function AdminTemplate() {
   );
   const dispatch = useDispatch();
   useEffect(() => {
-    // dispatch async action fetch profile
     dispatch(layThongTinNguoiDungAction);
   }, []);
   const [collapsed, setCollapsed] = useState(false);
-
-  // setTimeout(myGreeting, 2000);
-  // function myGreeting() {
-  //   if (userLogin?.maLoaiNguoiDung !== "QuanTri") {
-  //     alert("Bạn không có quyền truy cập vào trang này !");
-  //     return <Navigate to="/" replace={true} />;
-  //   }
-  //   return <Navigate to="/admin" replace={true} />;
-  // }
 
   const {
     token: { colorBgContainer },

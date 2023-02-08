@@ -25,7 +25,7 @@ export default function Header() {
       key: "1",
       label: (
         <NavLink
-          to="/movielist"
+          to="/homemenu"
           className="no-underline  text-white  text-sm px-4 transition-all font-medium leading-tight"
         >
           {t("Showtimes")}
@@ -138,7 +138,7 @@ export default function Header() {
         </Link>
         <div className="hidden md:block">
           <NavLink
-            to="/movielist"
+            to={"/homemenu"}
             className="no-underline  text-white  text-sm px-4 transition-all font-medium leading-tight"
           >
             {t("Showtimes")}
@@ -187,12 +187,12 @@ export default function Header() {
             </div>
           ) : (
             <nav className="flex items-center">
-              <NavLink to="users/login" className="no-underline">
+              <NavLink to={"/login"} className="no-underline">
                 <div className="flex flex-item justify-end text-white no-underline">
                   {t("Sign In")}
                 </div>
               </NavLink>
-              <NavLink to="/signup" className="no-underline lg:ml-6">
+              <NavLink to={"register"} className="no-underline lg:ml-6">
                 <div className="flex flex-item justify-end  text-white no-underline ">
                   {t("Sign Up")}
                 </div>

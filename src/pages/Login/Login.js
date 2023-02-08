@@ -1,162 +1,189 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-/* eslint-disable jsx-a11y/img-redundant-alt */
-import { useFormik } from "formik";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+// import { LoginAction } from "redux/actions/AuthAction";
+import { useDispatch, useSelector } from "react-redux";
+import { message } from "antd";
 import { dangNhapAction } from "redux/actions/QuanLyNguoiDungAction";
 
-export default function Login(props) {
-  let flag = useSelector((state) => state.CarouselReducer.flag);
-  console.log(flag);
-
-  console.log(props);
-  const dispatch = useDispatch();
+function Login() {
   const navigate = useNavigate();
+  let flag = useSelector((state) => state.CarouselReducer.flag);
+  const [messageApi, contextHolder] = message.useMessage();
+  const dispatch = useDispatch();
+  const { register, handleSubmit } = useForm();
+  const onSubmit = async (value) => {
+    console.log(value);
+    const data = {
+      taiKhoan: value.taiKhoan,
+      matKhau: value.password,
+    };
+    try {
+      await dispatch(dangNhapAction(data));
+      success();
+      if (flag) {
+        navigate(`/checkout/${flag.itemLich.maLichChieu}`);
+        window.location.reload();
+      } else {
+        navigate("/");
+        window.location.reload();
+      }
 
-  const formik = useFormik({
-    initialValues: {
-      taiKhoan: "",
-      matKhau: "",
-    },
-    validate: (values) => {
-      const errors = {};
-      if (!values.taiKhoan) {
-        errors.taiKhoan = "Required";
-      } else if (!/[A-z]|[0-9]$/i.test(values.taiKhoan)) {
-        errors.taiKhoan = "Invalid useName";
-      }
-      if (!values.matKhau) {
-        errors.matKhau = "Required";
-      }
-      return errors;
-    },
-    onSubmit: async (values) => {
-      try {
-        await dispatch(dangNhapAction(values));
-        if (flag) {
-          navigate(`/checkout/${flag.itemLich.maLichChieu}`);
-          window.location.reload();
-        } else {
-          navigate("/");
-          window.location.reload();
-        }
-      } catch (error) {
-        alert("Sai Mat Khau Hoac Ten Dang Nhap");
-      }
-    },
-  });
-
+      navigate("/");
+    } catch (err) {
+      error();
+    }
+  };
+  const success = () => {
+    messageApi.open({
+      type: "success",
+      content: "Success Login",
+    });
+  };
+  const error = () => {
+    messageApi.open({
+      type: "error",
+      content: "Error Login",
+    });
+  };
   return (
-    <form
-      onSubmit={formik.handleSubmit}
-      className="lg:w-1/2 xl:max-w-screen-sm"
+    <div
+      className="relative flex h-screen w-screen flex-col md:items-center md:justify-center md:bg-transparent"
+      style={{
+        backgroundImage: `url("https://rb.gy/p2hphi")`,
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+      }}
     >
-      <div className="py-12 bg-indigo-100 lg:bg-white flex justify-center lg:justify-start lg:px-12">
-        <div className="cursor-pointer flex items-center">
-          <div>
-            <svg
-              className="w-10 text-indigo-500"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlnsXlink="http://www.w3.org/1999/xlink"
-              version="1.1"
-              id="Layer_1"
-              x="0px"
-              y="0px"
-              viewBox="0 0 225 225"
-              style={{ enableBackground: "new 0 0 225 225" }}
-              xmlSpace="preserve"
-            >
-              <style
-                type="text/css"
-                dangerouslySetInnerHTML={{
-                  __html:
-                    "\n.st0{fill:none;stroke:currentColor;stroke-width:20;stroke-linecap:round;stroke-miterlimit:3;}\n",
-                }}
-              />
-              <g transform="matrix( 1, 0, 0, 1, 0,0) ">
-                <g>
-                  <path
-                    id="Layer0_0_1_STROKES"
-                    className="st0"
-                    d="M173.8,151.5l13.6-13.6 M35.4,89.9l29.1-29 M89.4,34.9v1 M137.4,187.9l-0.6-0.4     M36.6,138.7l0.2-0.2 M56.1,169.1l27.7-27.6 M63.8,111.5l74.3-74.4 M87.1,188.1L187.6,87.6 M110.8,114.5l57.8-57.8"
-                  />
-                </g>
-              </g>
-            </svg>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border rounded-lg shadow-lg bg-white px-10 py-5 w-4/5 sm:w-1/2 md:w-2/5">
+        {contextHolder}
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="relative mb-4">
+            <NavLink to={"/"} className="lg:absolute top-0 left-0">
+              <h2 className="text-center mb-2">
+                <img
+                  src="https://movie-booking-project.vercel.app/img/logoTixLoading.png"
+                  alt=""
+                  width={50}
+                  height={50}
+                />
+              </h2>
+            </NavLink>
+            <div className="hidden lg:block font-semibold text-3xl text-blue-800 text-center">
+              Đăng nhập
+            </div>
           </div>
-          <div className="text-2xl text-indigo-800 tracking-wide ml-2 font-semibold">
-            blockify
-          </div>
-        </div>
-      </div>
-      <div className="mt-4 px-12 sm:px-24 md:px-48 lg:px-12 lg:mt-8 xl:px-24 xl:max-w-2xl">
-        <h2
-          className="text-center text-4xl text-indigo-900 font-display font-semibold lg:text-left xl:text-5xl
-xl:text-bold"
-        >
-          Log in
-        </h2>
-        <div className="mt-12">
           <div>
-            <div>
-              <div className="text-sm font-bold text-gray-700 tracking-wide">
-                Email Address
-              </div>
+            <div className="mb-2">
+              <label
+                htmlFor="taiKhoan"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              >
+                Tài Khoản
+              </label>
               <input
-                name="taiKhoan"
-                className="w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500"
+                {...register("taiKhoan")}
                 type="text"
-                placeholder="mike@gmail.com"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.taiKhoan}
+                id="taiKhoan"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                required
               />
             </div>
-            <div className="mt-8">
-              <div className="flex justify-between items-center">
-                <div className="text-sm font-bold text-gray-700 tracking-wide">
-                  Password
-                </div>
-                <div>
-                  <a
-                    className="text-xs font-display font-semibold text-indigo-600 hover:text-indigo-800
-                  cursor-pointer"
-                  >
-                    Forgot Password?
-                  </a>
-                </div>
-              </div>
+            <div className="mb-6">
+              <label
+                htmlFor=""
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              >
+                Mật Khẩu
+              </label>
               <input
-                className="w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500 "
+                {...register("password")}
                 type="password"
-                name="matKhau"
-                placeholder="Enter your password"
-                onChange={formik.handleChange}
+                id="password"
+                name="password"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                required
               />
             </div>
-            <div className="mt-10">
+            <div className="grid grid-cols-2 items-center mb-6">
+              <NavLink
+                to={""}
+                className="text-rose-700 hover:text-rose-500 hover:underline underline-offset-4 tracking-wider duration-200 active"
+              >
+                Quên mật khẩu?
+              </NavLink>
               <button
                 type="submit"
-                className="bg-indigo-500 text-gray-100 p-4 w-full rounded-full tracking-wide
-          font-semibold font-display focus:outline-none focus:shadow-outline hover:bg-indigo-600
-          shadow-lg"
+                className="text-white focus:outline-none focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 w-full bg-red-500 hover:bg-red-800 duration-300 border-inherit"
               >
-                Log In
+                Đăng nhập
               </button>
             </div>
+            <div className="text-center">
+              <p>
+                Chưa có tài khoản{" "}
+                <NavLink
+                  to={"/register"}
+                  className="text-rose-700 hover:text-rose-500 hover:underline underline-offset-4 tracking-wider duration-200"
+                >
+                  Đăng ký ngay
+                </NavLink>
+              </p>
+            </div>
           </div>
-          <div className="mt-12 text-sm font-display font-semibold text-gray-700 text-center">
-            Don't have an account ?{" "}
-            <NavLink
-              to="/users/signup"
-              className="cursor-pointer text-indigo-600 hover:text-indigo-800"
-            >
-              Sign up
-            </NavLink>
-          </div>
-        </div>
+        </form>
       </div>
-    </form>
+    </div>
   );
 }
+
+export default Login;
+
+// /* eslint-disable jsx-a11y/anchor-is-valid */
+// /* eslint-disable jsx-a11y/img-redundant-alt */
+// import { useFormik } from "formik";
+// import React from "react";
+// import { useDispatch, useSelector } from "react-redux";
+// import { NavLink, useNavigate } from "react-router-dom";
+// import { dangNhapAction } from "redux/actions/QuanLyNguoiDungAction";
+
+// export default function Login(props) {
+//
+//   console.log(flag);
+
+//   console.log(props);
+//   const dispatch = useDispatch();
+//   const navigate = useNavigate();
+
+//   const formik = useFormik({
+//     initialValues: {
+//       taiKhoan: "",
+//       matKhau: "",
+//     },
+//     validate: (values) => {
+//       const errors = {};
+//       if (!values.taiKhoan) {
+//         errors.taiKhoan = "Required";
+//       } else if (!/[A-z]|[0-9]$/i.test(values.taiKhoan)) {
+//         errors.taiKhoan = "Invalid useName";
+//       }
+//       if (!values.matKhau) {
+//         errors.matKhau = "Required";
+//       }
+//       return errors;
+//     },
+//     onSubmit: async (values) => {
+//       try {
+//         await dispatch(dangNhapAction(values));
+//         if (flag) {
+//           navigate(`/checkout/${flag.itemLich.maLichChieu}`);
+//           window.location.reload();
+//         } else {
+//           navigate("/");
+//           window.location.reload();
+//         }
+//       } catch (error) {
+//         alert("Sai Mat Khau Hoac Ten Dang Nhap");
+//       }
+//     },
+//   });
