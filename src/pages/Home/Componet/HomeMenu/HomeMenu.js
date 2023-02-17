@@ -66,7 +66,7 @@ function HomeMenu(props) {
                                                 `/checkout/${itemhour.maLichChieu}`
                                               );
                                             } else {
-                                              navigate("/users/login");
+                                              navigate("/login");
                                               dispatchEvent({
                                                 type: "DANGODATVE",
                                                 flag: { itemhour },
