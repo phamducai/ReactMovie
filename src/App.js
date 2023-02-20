@@ -17,6 +17,7 @@ import Dashboard from "pages/Admin/Dashboard/DashbashUser";
 import AddUser from "pages/Admin/Dashboard/AddUser";
 import UpdateUser from "pages/Admin/Dashboard/UpdateUser";
 import DetailMovie from "pages/Detail/Detail";
+import AppRoute from "app/AppRoute";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,8 +36,11 @@ function App() {
         <Route index path="" element={<Home />} />
         <Route path="detail/:id" element={<DetailMovie />} />
         <Route path="checkout/:maLichChieu" element={<Checkout />} />
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
+        <Route path="login" element={<AppRoute component={Login} isAuth />} />
+        <Route
+          path="register"
+          element={<AppRoute component={Register} isAuth />}
+        />
         <Route path="profile/:taikhoan" element={<Profile />} />
         <Route path="admin" element={<AdminTemplate />}>
           <Route index path="" element={<Dashboard />} />

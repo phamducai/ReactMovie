@@ -26,13 +26,12 @@ export default function Home(props) {
   return (
     <Suspense
       fallback={
-        <div className="w-1/12 mx-auto scroll-mt-60 mt-60">
+        <div className="w-1/12 mx-auto scroll-mt-60 mt-96">
           <Loading />
         </div>
       }
     >
       <Header />
-
       <Element name="carousel">
         <HomeCarousel />
       </Element>

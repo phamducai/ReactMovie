@@ -1,5 +1,5 @@
 import { CheckOutlined } from "@ant-design/icons";
-import { Button, Tabs } from "antd";
+import { Button, Tabs, Tag } from "antd";
 import React, { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
@@ -160,13 +160,15 @@ function Checkout(props) {
               <span className="text-red-400 text-lg w-44 overflow-x-scroll ">
                 Ghế
               </span>{" "}
-              {_.sortBy(danhSachGheDangDat, ["stt"]).map((gheDD, index) => {
-                return (
-                  <span key={index} className="text-green-500 text-xl mr-2">
-                    {gheDD.stt}
-                  </span>
-                );
-              })}
+              <div className="break-words">
+                {_.sortBy(danhSachGheDangDat, ["stt"]).map((gheDD, index) => {
+                  return (
+                    <span key={index} className="text-green-500 text-xl mr-2 ">
+                      {gheDD.stt}
+                    </span>
+                  );
+                })}
+              </div>
             </div>
           </div>
           <hr />
@@ -243,9 +245,9 @@ function KetQuaDatVe(props) {
                       <span className="font-bold">Ghế:</span>{" "}
                       {ticket.danhSachGhe.slice(0, 10).map((ghe, index) => {
                         return (
-                          <span className="text-green-500 text-xl" key={index}>
+                          <Tag className="text-green-500 text-xl" key={index}>
                             {ghe.tenGhe}
-                          </span>
+                          </Tag>
                         );
                       })}
                     </p>
